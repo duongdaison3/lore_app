@@ -22,7 +22,7 @@ export interface PromptEngineContext {
   currentDate: Date;
 }
 
-export function getDailyPrompt(context: PromptEngineContext): Prompt | null {
+export async function getDailyPrompt(context: PromptEngineContext): Promise<Prompt | null> {
   const { currentMood, userPreferences, recentPrompts, candidates, currentDate } = context;
 
   if (!candidates || candidates.length === 0) {
@@ -88,5 +88,29 @@ export function getDailyPrompt(context: PromptEngineContext): Prompt | null {
   // 3. Sort by score descending
   scoredPrompts.sort((a, b) => b.score - a.score);
 
-  return scoredPrompts[0].prompt;
+  const bestCandidate = scoredPrompts[0].prompt;
+
+  // 4. Augment with AI if possible (fallback to candidate if AI fails)
+  try {
+    const { generatePersonalizedPrompt } = await import('./aiPromptEngine');
+    const aiResult = await generatePersonalizedPrompt(
+      bestCandidate.text,
+      currentMood,
+      userPreferences.preferredTones
+    );
+
+    if (aiResult) {
+      return {
+        ...bestCandidate,
+        text: aiResult.prompt,
+        category: aiResult.category,
+        tone: aiResult.tone,
+        intensity: aiResult.intensity
+      };
+    }
+  } catch (err) {
+    console.error("Failed to load or execute AI personalization", err);
+  }
+
+  return bestCandidate;
 }

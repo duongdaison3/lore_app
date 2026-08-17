@@ -14,7 +14,7 @@ describe('Prompt Engine', () => {
     { id: '4', text: 'Prompt 4', category: 'reflection', tone: 'deep', intensity: 5, suitableMoods: ['😐'], cooldownDays: 5 },
   ];
 
-  it('selects the best prompt based on mood', () => {
+  it('selects the best prompt based on mood', async () => {
     const context: PromptEngineContext = {
       currentMood: '🔥',
       userPreferences: { preferredTones: [] },
@@ -23,11 +23,11 @@ describe('Prompt Engine', () => {
       currentDate: new Date('2026-08-17T00:00:00Z'),
     };
 
-    const result = getDailyPrompt(context);
+    const result = await getDailyPrompt(context);
     expect(result?.id).toBe('3');
   });
 
-  it('selects based on user tone preference if mood matches multiple', () => {
+  it('selects based on user tone preference if mood matches multiple', async () => {
     const context: PromptEngineContext = {
       currentMood: '😐',
       userPreferences: { preferredTones: ['gentle'] },
@@ -39,11 +39,11 @@ describe('Prompt Engine', () => {
       currentDate: new Date('2026-08-17T00:00:00Z'),
     };
 
-    const result = getDailyPrompt(context);
+    const result = await getDailyPrompt(context);
     expect(result?.id).toBe('2'); // Match tone
   });
 
-  it('filters out prompts in cooldown period', () => {
+  it('filters out prompts in cooldown period', async () => {
     const context: PromptEngineContext = {
       currentMood: '😐',
       userPreferences: { preferredTones: [] },
@@ -54,12 +54,12 @@ describe('Prompt Engine', () => {
       currentDate: new Date('2026-08-17T00:00:00Z'),
     };
 
-    const result = getDailyPrompt(context);
+    const result = await getDailyPrompt(context);
     // 1 is in cooldown (5 days), 4 is not
     expect(result?.id).toBe('4');
   });
 
-  it('penalizes recently seen categories', () => {
+  it('penalizes recently seen categories', async () => {
     const context: PromptEngineContext = {
       currentMood: '😐',
       userPreferences: { preferredTones: [] },
@@ -87,13 +87,13 @@ describe('Prompt Engine', () => {
       ]
     };
 
-    const result = getDailyPrompt(context2);
+    const result = await getDailyPrompt(context2);
     // Both match mood (+10). 1 is reflection (-5 penalty). 2 is memory (no penalty).
     // 2 should win.
     expect(result?.id).toBe('2');
   });
 
-  it('falls back gracefully when all candidates are in cooldown', () => {
+  it('falls back gracefully when all candidates are in cooldown', async () => {
     const context: PromptEngineContext = {
       currentMood: '😐',
       userPreferences: { preferredTones: [] },
@@ -108,7 +108,7 @@ describe('Prompt Engine', () => {
       currentDate: new Date('2026-08-17T00:00:00Z'),
     };
 
-    const result = getDailyPrompt(context);
+    const result = await getDailyPrompt(context);
     // Both are in cooldown. Fallback mode ignores cooldown but penalizes based on how recent they are.
     // 2 was seen 7 days ago, 1 was seen 1 day ago. 2 should win.
     expect(result?.id).toBe('2');
