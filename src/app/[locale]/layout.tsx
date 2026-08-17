@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -6,9 +7,19 @@ import { Toaster } from 'sonner';
 import { Navigation } from '@/components/Navigation';
 import '../globals.css';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Lore - A tiny daily conversation with yourself',
   description: 'Vietnamese-first daily journaling web application.',
+  icons: {
+    icon: [
+      { url: '/lore/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/lore/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/lore/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ]
+  },
+  manifest: '/lore/favicon/site.webmanifest'
 };
 
 export default async function LocaleLayout({

@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from "next-intl"
 import { useTheme } from "next-themes"
 import { Moon, Sun, Globe } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
 
 export function Navigation() {
   const t = useTranslations("Theme")
@@ -24,7 +26,16 @@ export function Navigation() {
   return (
     <header className="sticky top-0 z-40 w-full bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--border)]">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-6">
-        <div className="font-semibold tracking-tight text-[var(--foreground)]">Lore</div>
+        <Link href="/" className="flex items-center">
+          <Image 
+            src="/lore/Logo_without_background.png" 
+            alt="Lore" 
+            width={120} 
+            height={40} 
+            className="h-8 w-auto object-contain dark:invert"
+            priority
+          />
+        </Link>
         <nav className="flex items-center gap-4">
           <button
             onClick={toggleLanguage}
