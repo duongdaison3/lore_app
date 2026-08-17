@@ -12,20 +12,29 @@ model User {
   email        String         @unique
   phone        String?
   name         String?
-  passwordHash String
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  passwordHash   String
+  preferredTones String[]       @default([])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   
   journalEntries DailyEntry[]
 }
 
 model Prompt {
-  id         String   @id @default(cuid())
-  text       String
-  isFollowUp Boolean  @default(false)
-  active     Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                String   @id @default(cuid())
+  text              String
+  isFollowUp        Boolean  @default(false)
+  active            Boolean  @default(true)
+  language          String   @default("vi")
+  category          String   // reflection, memory, gratitude, relationship, identity, creative, future, unhinged
+  tone              String   // gentle, deep, playful, random, unhinged
+  intensity         Int      @default(1) // 1-10
+  targetGoals       String[]
+  suitableMoods     String[]
+  seasonalRelevance String?
+  cooldownDays      Int      @default(30)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   answers EntryAnswer[]
 }
