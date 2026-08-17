@@ -4,16 +4,83 @@
     "error": "An error occurred",
     "save": "Save",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Confirm delete",
+    "deleting": "Deleting..."
   },
   "Journal": {
     "emptyStateTitle": "Nothing here yet",
-    "emptyStateDesc": "You don't need to write perfectly. Write as if you're texting yourself.",
+    "emptyStateDesc": "You don't have to write well. Just write like you're texting yourself.",
     "newEntry": "Start writing",
-    "placeholder": "What's on your mind today...?"
+    "placeholder": "What's on your mind today...?",
+    "vibeQuestion": "What's your vibe today?",
+    "okayTellMe": "Okay, tell me a bit about it.",
+    "digDeeper": "Care to dig a little deeper?",
+    "defaultPrompt": "Anything memorable happen today?",
+    "continue": "Continue",
+    "saveToLore": "Save to Lore",
+    "writeNaturally": "Just write naturally...",
+    "thatsEnough": "That's enough for now",
+    "savedTitle": "Saved to Lore",
+    "backHome": "Back to Home",
+    "fallbackPrimary": "If today was a TV episode, what would you name it?",
+    "fallbackFollowUp": "What made you decide on that?"
+  },
+  "Library": {
+    "backToLibrary": "Back to library",
+    "noAnswer": "No answer yet",
+    "deleteTitle": "Delete this entry?",
+    "deleteDesc": "Whatever you wrote in this entry will be deleted and cannot be undone.",
+    "deletedSuccess": "Entry deleted",
+    "deleteError": "Error deleting entry",
+    "updateSuccess": "Entry updated",
+    "updateError": "Error updating entry",
+    "searchPlaceholder": "Search by topic, answer...",
+    "searchBtn": "Search",
+    "pickDate": "Pick a date",
+    "clearFilter": "Clear filter",
+    "day": "Day",
+    "libraryTitle": "Lore Library",
+    "noPrompt": "No prompt",
+    "emptyDate": "This date is still empty.",
+    "emptyLibrary": "No lore found here.",
+    "emptyDesc": "Write your first entry or try changing the search filters."
+  },
+  "Auth": {
+    "login": "Log in",
+    "register": "Sign up",
+    "loginWelcome": "Welcome back to Lore.",
+    "registerWelcome": "Start your journey with Lore.",
+    "username": "Username",
+    "usernamePlaceholder": "Enter username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "namePlaceholder": "Your name",
+    "phone": "Phone number",
+    "phonePlaceholder": "Your phone number",
+    "email": "Email",
+    "emailPlaceholder": "Your email",
+    "loginError": "Incorrect username or password",
+    "registerSuccess": "Signed up successfully! Please log in.",
+    "processing": "Processing...",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "logout": "Log out"
+  },
+  "Navigation": {
+    "library": "Library",
+    "settings": "Settings"
   },
   "Theme": {
-    "toggleLight": "Light theme",
-    "toggleDark": "Dark theme"
+    "toggleLight": "Light mode",
+    "toggleDark": "Dark mode"
+  },
+  "Home": {
+    "morning": "Good morning,",
+    "howAreYou": "How are you feeling today?"
   }
 }

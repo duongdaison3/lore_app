@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations, useFormatter, useLocale } from "next-intl"
 import { Button } from "@/components/ui/Button"
 import { Textarea } from "@/components/ui/Textarea"
 import { ArrowLeft, Edit2, Trash2, Check, X } from "lucide-react"
@@ -29,6 +30,10 @@ type EntryType = {
 
 export function EntryDetailView({ entry }: { entry: EntryType }) {
   const router = useRouter()
+  const t = useTranslations("Library")
+  const tc = useTranslations("Common")
+  const format = useFormatter()
+  const locale = useLocale()
   
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -44,11 +49,11 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
     try {
       const updates = Object.entries(editedAnswers).map(([id, content]) => ({ id, content }))
       await updateEntryAnswers(updates)
-      toast.success("Đã cập nhật entry")
+      toast.success(t("updateSuccess"))
       setIsEditing(false)
       router.refresh()
     } catch (e) {
-      toast.error("Lỗi khi cập nhật")
+      toast.error(t("updateError"))
     } finally {
       setIsSaving(false)
     }
@@ -65,9 +70,9 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
   return (
     <div className="space-y-8 pb-12">
       <div className="flex items-center justify-between">
-        <Button variant="ghost" onClick={() => router.push("/vi/library")} className="px-0 hover:bg-transparent text-[var(--muted-foreground)] hover:text-foreground">
+        <Button variant="ghost" onClick={() => router.push(`/${locale}/library`)} className="px-0 hover:bg-transparent text-[var(--muted-foreground)] hover:text-foreground">
           <ArrowLeft className="mr-2 h-5 w-5" />
-          Quay lại thư viện
+          {t("backToLibrary")}
         </Button>
 
         <div className="flex gap-2">
@@ -75,22 +80,22 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
             <>
               <Button variant="ghost" onClick={handleCancelEdit} disabled={isSaving}>
                 <X className="mr-2 h-4 w-4" />
-                Hủy
+                {tc("cancel")}
               </Button>
               <Button onClick={handleSave} disabled={isSaving}>
                 <Check className="mr-2 h-4 w-4" />
-                Lưu
+                {tc("save")}
               </Button>
             </>
           ) : (
             <>
               <Button variant="ghost" onClick={() => setIsEditing(true)}>
                 <Edit2 className="mr-2 h-4 w-4" />
-                Sửa
+                {tc("edit")}
               </Button>
               <Button variant="ghost" onClick={() => setShowDeleteModal(true)} className="text-red-500 hover:text-red-600 hover:bg-red-50">
                 <Trash2 className="mr-2 h-4 w-4" />
-                Xóa
+                {tc("delete")}
               </Button>
             </>
           )}
@@ -100,7 +105,7 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
       <div className="flex items-center gap-4">
         <span className="text-6xl bg-[var(--muted)] p-4 rounded-3xl">{entry.mood}</span>
         <div>
-          <h2 className="text-3xl font-bold">Ngày {entry.localDate.split("-").reverse().join("/")}</h2>
+          <h2 className="text-3xl font-bold">{t("day")} {format.dateTime(new Date(entry.localDate), { dateStyle: 'short' })}</h2>
         </div>
       </div>
 
@@ -116,8 +121,7 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
                 <Textarea 
                   value={editedAnswers[answer.id] || ""}
                   onChange={(e) => setEditedAnswers(prev => ({ ...prev, [answer.id]: e.target.value }))}
-                  className="min-h-[150px] text-lg bg-white"
-                  placeholder="Nhập câu trả lời của bạn..."
+                  className="min-h-[150px] text-lg bg-[var(--background)]"
                 />
               ) : (
                 <p className="text-lg leading-relaxed text-[var(--foreground)] whitespace-pre-wrap">

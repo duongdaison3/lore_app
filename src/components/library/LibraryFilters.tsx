@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useTranslations, useFormatter, useLocale } from "next-intl"
 import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
 import { Search, X, Calendar as CalendarIcon } from "lucide-react"
@@ -15,6 +16,10 @@ const MOODS = ["😵‍💫", "😐", "🙂", "🥰", "🔥", "🫠"]
 export function LibraryFilters() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const t = useTranslations("Library")
+  const tc = useTranslations("Common")
+  const formatter = useFormatter()
+  const locale = useLocale()
   
   const initialQuery = searchParams.get("q") || ""
   const initialMood = searchParams.get("mood") || ""
@@ -35,7 +40,7 @@ export function LibraryFilters() {
     if (newMood) params.set("mood", newMood)
     if (newDate) params.set("date", newDate)
     
-    router.push(`/vi/library?${params.toString()}`)
+    router.push(`/${locale}/library?${params.toString()}`)
   }
 
   const handleSearch = (e: React.FormEvent) => {
@@ -62,7 +67,7 @@ export function LibraryFilters() {
     setMood("")
     setDateStr("")
     setSelectedDate(undefined)
-    router.push("/vi/library")
+    router.push(`/${locale}/library`)
   }
 
   return (
@@ -73,11 +78,11 @@ export function LibraryFilters() {
           <Input 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Tìm kiếm theo chủ đề, câu trả lời..." 
+            placeholder={t("searchPlaceholder")}
             className="pl-10 h-12 rounded-full"
           />
         </div>
-        <Button type="submit" className="h-12 rounded-full px-6">Tìm kiếm</Button>
+        <Button type="submit" className="h-12 rounded-full px-6">{t("searchBtn")}</Button>
       </form>
       
       <div className="flex flex-wrap items-center gap-4">
@@ -101,13 +106,13 @@ export function LibraryFilters() {
           onClick={() => setIsCalendarOpen(true)}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {dateStr ? format(new Date(dateStr), "dd/MM/yyyy") : "Chọn ngày"}
+          {dateStr ? formatter.dateTime(new Date(dateStr), { dateStyle: 'short' }) : t("pickDate")}
         </Button>
 
         {(query || mood || dateStr) && (
           <Button variant="ghost" onClick={clearAll} className="rounded-full h-12">
             <X className="mr-2 h-4 w-4" />
-            Xóa lọc
+            {t("clearFilter")}
           </Button>
         )}
       </div>

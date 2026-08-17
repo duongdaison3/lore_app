@@ -21,6 +21,7 @@ export interface PromptEngineContext {
   candidates: Prompt[];
   currentDate: Date;
   activeMemories?: { type: string; content: string }[];
+  locale?: string;
 }
 
 export async function getDailyPrompt(context: PromptEngineContext): Promise<Prompt | null> {
@@ -98,7 +99,8 @@ export async function getDailyPrompt(context: PromptEngineContext): Promise<Prom
       bestCandidate.text,
       currentMood,
       userPreferences.preferredTones,
-      context.activeMemories || []
+      context.activeMemories || [],
+      context.locale || 'vi'
     );
 
     if (aiResult) {

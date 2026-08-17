@@ -17,30 +17,22 @@ export async function saveMood(mood: string, timezoneOffset: number) {
 
   const localDate = getLocalDateString(timezoneOffset)
 
-  // Find or create daily entry for today
-  let entry = await prisma.dailyEntry.findUnique({
+  const entry = await prisma.dailyEntry.upsert({
     where: {
       userId_localDate: {
         userId: session.user.id,
         localDate,
       },
     },
+    update: {
+      mood,
+    },
+    create: {
+      userId: session.user.id,
+      localDate,
+      mood,
+    },
   })
-
-  if (!entry) {
-    entry = await prisma.dailyEntry.create({
-      data: {
-        userId: session.user.id,
-        localDate,
-        mood,
-      },
-    })
-  } else if (entry.mood !== mood) {
-    entry = await prisma.dailyEntry.update({
-      where: { id: entry.id },
-      data: { mood },
-    })
-  }
 
   return { entryId: entry.id }
 }
@@ -65,6 +57,16 @@ export async function getPrompts() {
 export async function saveDraft(entryId: string, promptId: string, content: string) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
+
+  // Verify ownership of the entry before allowing drafting
+  const entry = await prisma.dailyEntry.findUnique({
+    where: { id: entryId },
+    select: { userId: true },
+  })
+
+  if (!entry || entry.userId !== session.user.id) {
+    throw new Error("Unauthorized: Entry not found or belongs to another user")
+  }
 
   // Upsert the entry answer
   await prisma.entryAnswer.upsert({
@@ -92,6 +94,16 @@ export async function saveDraft(entryId: string, promptId: string, content: stri
 export async function completeEntry(entryId: string) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
+
+  // Verify ownership of the entry before marking as complete
+  const entry = await prisma.dailyEntry.findUnique({
+    where: { id: entryId },
+    select: { userId: true },
+  })
+
+  if (!entry || entry.userId !== session.user.id) {
+    throw new Error("Unauthorized: Entry not found or belongs to another user")
+  }
 
   // Mark all related answers as not draft, and the entry as completed
   await prisma.entryAnswer.updateMany({

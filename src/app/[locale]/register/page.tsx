@@ -8,8 +8,12 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card"
 import { toast } from "sonner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useTranslations, useLocale } from "next-intl"
 
 export default function RegisterPage() {
+  const t = useTranslations("Auth")
+  const tc = useTranslations("Common")
+  const locale = useLocale()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
@@ -19,13 +23,13 @@ export default function RegisterPage() {
     const formData = new FormData(e.currentTarget)
     try {
       await registerAction(formData)
-      toast.success("Đăng ký thành công! Vui lòng đăng nhập.")
-      router.push("/vi/login")
+      toast.success(t("registerSuccess"))
+      router.push(`/${locale}/login`)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        toast.error(err.message || "Đã có lỗi xảy ra")
+        toast.error(err.message || tc("error"))
       } else {
-        toast.error("Đã có lỗi xảy ra")
+        toast.error(tc("error"))
       }
     } finally {
       setLoading(false)
@@ -36,44 +40,44 @@ export default function RegisterPage() {
     <div className="flex min-h-[70vh] items-center justify-center p-4">
       <Card className="w-full max-w-md animate-in fade-in zoom-in-95 duration-500">
         <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-2xl">Đăng ký tài khoản</CardTitle>
-          <p className="text-sm text-[var(--muted-foreground)]">Bắt đầu hành trình của bạn với Lore.</p>
+          <CardTitle className="text-2xl">{t("register")}</CardTitle>
+          <p className="text-sm text-[var(--muted-foreground)]">{t("registerWelcome")}</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-2">
-                 <label className="text-sm font-medium">Họ và tên</label>
-                 <Input name="name" required placeholder="Tên của bạn" />
+                 <label className="text-sm font-medium">{t("fullName")}</label>
+                 <Input name="name" required placeholder={t("namePlaceholder")} />
                </div>
                <div className="space-y-2">
-                 <label className="text-sm font-medium">Số điện thoại</label>
-                 <Input name="phone" required placeholder="09xxxx" />
+                 <label className="text-sm font-medium">{t("phone")}</label>
+                 <Input name="phone" required placeholder={t("phonePlaceholder")} />
                </div>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Email</label>
-              <Input type="email" name="email" required placeholder="email@example.com" />
+              <label className="text-sm font-medium">{t("email")}</label>
+              <Input type="email" name="email" required placeholder={t("emailPlaceholder")} />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Tên đăng nhập (Username)</label>
-              <Input name="username" required placeholder="Nhập username" />
+              <label className="text-sm font-medium">{t("username")}</label>
+              <Input name="username" required placeholder={t("usernamePlaceholder")} />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Mật khẩu</label>
+              <label className="text-sm font-medium">{t("password")}</label>
               <Input type="password" name="password" required placeholder="••••••••" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Nhập lại mật khẩu</label>
+              <label className="text-sm font-medium">{t("confirmPassword")}</label>
               <Input type="password" name="confirmPassword" required placeholder="••••••••" />
             </div>
             <Button type="submit" className="w-full rounded-full" disabled={loading}>
-              {loading ? "Đang xử lý..." : "Đăng ký"}
+              {loading ? t("processing") : t("register")}
             </Button>
             <div className="text-center text-sm pt-4">
-              Đã có tài khoản?{" "}
-              <Link href="/vi/login" className="text-[var(--primary)] hover:underline">
-                Đăng nhập
+              {t("haveAccount")}{" "}
+              <Link href={`/${locale}/login`} className="text-[var(--primary)] hover:underline">
+                {t("login")}
               </Link>
             </div>
           </form>

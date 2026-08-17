@@ -57,7 +57,8 @@ export async function generatePersonalizedPrompt(
   candidatePromptText: string, 
   userMood: string, 
   preferredTones: string[],
-  longTermMemories: { type: string, content: string }[] = []
+  longTermMemories: { type: string, content: string }[] = [],
+  locale: string = 'vi'
 ): Promise<AIPromptResult | null> {
   const apiKey = getRotatedApiKey();
   if (!apiKey) {
@@ -75,17 +76,17 @@ export async function generatePersonalizedPrompt(
       schema: promptSchema,
       system: `
         You are a journaling AI for the app 'Lore'.
-        Lore is a Vietnamese-first daily journaling web application. 
-        The tone is: "Không cần viết hay. Viết như đang nhắn cho chính mình."
+        Lore is a daily journaling web application. 
+        The tone is: "You don't have to write well. Just write like you're texting yourself."
         
         TASK: Rewrite or personalize the given candidate prompt based on the user's current mood and preferred tones.
         
-        Rules for the generated Vietnamese prompt:
+        Rules for the generated prompt:
+        - MUST be generated in the requested language/locale: ${locale}
         - Sound natural, do not feel machine-translated.
         - Be concise and easily answerable.
         - Respect the user's preferred tones if possible.
         - Do NOT diagnose, judge, or use manipulative emotional language.
-        - Avoid clichés like "hãy", "bạn có bao giờ", "điều gì khiến bạn".
         
         You have access to the user's LONG-TERM MEMORIES. Use these to make the prompt feel highly personal, but only if they naturally fit the context. Do NOT forcefully inject memories if they are irrelevant to the current candidate prompt or mood.
       `,
@@ -117,7 +118,8 @@ export async function generatePersonalizedPrompt(
 
 export async function generateFollowUpPrompt(
   previousAnswer: string,
-  userMood: string
+  userMood: string,
+  locale: string = 'vi'
 ): Promise<AIPromptResult | null> {
   const apiKey = getRotatedApiKey();
   if (!apiKey) {
@@ -137,7 +139,7 @@ export async function generateFollowUpPrompt(
         TASK: Generate a single follow-up question based on the user's previous journal entry answer.
         
         Rules:
-        - Must be in Vietnamese.
+        - MUST be in the requested language/locale: ${locale}
         - Must sound natural and empathetic.
         - Do not diagnose or make assumptions about the user's life.
         - Ask an open-ended, gently probing question.

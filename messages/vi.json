@@ -4,16 +4,83 @@
     "error": "Đã có lỗi xảy ra",
     "save": "Lưu",
     "cancel": "Hủy",
-    "back": "Quay lại"
+    "back": "Quay lại",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "confirmDelete": "Đồng ý xóa",
+    "deleting": "Đang xóa..."
   },
   "Journal": {
     "emptyStateTitle": "Chưa có gì ở đây cả",
     "emptyStateDesc": "Không cần viết hay. Viết như đang nhắn cho chính mình.",
     "newEntry": "Bắt đầu viết",
-    "placeholder": "Bạn đang nghĩ gì hôm nay...?"
+    "placeholder": "Bạn đang nghĩ gì hôm nay...?",
+    "vibeQuestion": "Hôm nay bạn đang ở vibe nào?",
+    "okayTellMe": "Okay, kể tôi nghe một chút.",
+    "digDeeper": "Đào sâu thêm một chút?",
+    "defaultPrompt": "Có điều gì đáng nhớ hôm nay không?",
+    "continue": "Tiếp tục",
+    "saveToLore": "Lưu vào Lore",
+    "writeNaturally": "Cứ viết tự nhiên...",
+    "thatsEnough": "Thôi, vậy đủ rồi",
+    "savedTitle": "Đã lưu vào Lore",
+    "backHome": "Quay lại trang chủ",
+    "fallbackPrimary": "Nếu hôm nay là một tập phim, bạn sẽ đặt tên nó là gì?",
+    "fallbackFollowUp": "Điều gì đã khiến bạn quyết định như vậy?"
+  },
+  "Library": {
+    "backToLibrary": "Quay lại thư viện",
+    "noAnswer": "Chưa có câu trả lời",
+    "deleteTitle": "Xóa entry này nhé?",
+    "deleteDesc": "Những gì bạn viết trong entry này sẽ bị xóa và không thể hoàn tác.",
+    "deletedSuccess": "Đã xóa entry",
+    "deleteError": "Lỗi khi xóa",
+    "updateSuccess": "Đã cập nhật entry",
+    "updateError": "Lỗi khi cập nhật",
+    "searchPlaceholder": "Tìm kiếm theo chủ đề, câu trả lời...",
+    "searchBtn": "Tìm kiếm",
+    "pickDate": "Chọn ngày",
+    "clearFilter": "Xóa lọc",
+    "day": "Ngày",
+    "libraryTitle": "Thư viện Lore",
+    "noPrompt": "Không có câu hỏi",
+    "emptyDate": "Ngày hôm nay vẫn còn trống.",
+    "emptyLibrary": "Chưa có lore nào ở đây.",
+    "emptyDesc": "Hãy viết entry đầu tiên hoặc thử thay đổi bộ lọc tìm kiếm nhé."
+  },
+  "Auth": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "loginWelcome": "Chào mừng bạn trở lại với Lore.",
+    "registerWelcome": "Bắt đầu hành trình của bạn với Lore.",
+    "username": "Tên đăng nhập (Username)",
+    "usernamePlaceholder": "Nhập username",
+    "password": "Mật khẩu",
+    "passwordPlaceholder": "Nhập mật khẩu",
+    "confirmPassword": "Nhập lại mật khẩu",
+    "fullName": "Họ và tên",
+    "namePlaceholder": "Tên của bạn",
+    "phone": "Số điện thoại",
+    "phonePlaceholder": "Số điện thoại của bạn",
+    "email": "Email",
+    "emailPlaceholder": "Email của bạn",
+    "loginError": "Sai tài khoản hoặc mật khẩu",
+    "registerSuccess": "Đăng ký thành công! Vui lòng đăng nhập.",
+    "processing": "Đang xử lý...",
+    "noAccount": "Chưa có tài khoản?",
+    "haveAccount": "Đã có tài khoản?",
+    "logout": "Đăng xuất"
+  },
+  "Navigation": {
+    "library": "Thư viện",
+    "settings": "Cài đặt"
   },
   "Theme": {
     "toggleLight": "Giao diện sáng",
     "toggleDark": "Giao diện tối"
+  },
+  "Home": {
+    "morning": "Chào buổi sáng,",
+    "howAreYou": "Hôm nay bạn cảm thấy thế nào?"
   }
 }

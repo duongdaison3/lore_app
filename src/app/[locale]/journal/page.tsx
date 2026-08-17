@@ -2,8 +2,10 @@ import { getPrompts } from "@/app/actions/journal"
 import { JournalFlow } from "@/components/JournalFlow"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 
 export default async function JournalPage() {
+  const t = await getTranslations("Journal")
   const session = await auth()
   if (!session) {
     redirect("/vi/login")
@@ -15,8 +17,8 @@ export default async function JournalPage() {
   } catch {
     // Fallback if DB not seeded or other error
     prompts = {
-      primary: { id: "p1", text: "Nếu hôm nay là một tập phim, bạn sẽ đặt tên nó là gì?", isFollowUp: false },
-      followUp: { id: "f1", text: "Điều gì đã khiến bạn quyết định như vậy?", isFollowUp: true }
+      primary: { id: "p1", text: t("fallbackPrimary"), isFollowUp: false },
+      followUp: { id: "f1", text: t("fallbackFollowUp"), isFollowUp: true }
     }
   }
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { saveMood, saveDraft, completeEntry } from "@/app/actions/journal"
 import { Button } from "@/components/ui/Button"
 import { Textarea } from "@/components/ui/Textarea"
@@ -18,6 +18,7 @@ interface Prompt {
 
 export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Prompt | null, followUp: Prompt | null } }) {
   const t = useTranslations("Journal")
+  const locale = useLocale()
   const [step, setStep] = useState<"mood" | "primary" | "followup" | "complete">("mood")
   const [entryId, setEntryId] = useState<string | null>(null)
   
@@ -67,7 +68,7 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
   if (step === "mood") {
     return (
       <div className="flex flex-col items-center justify-center space-y-12 py-16 animate-in fade-in duration-700">
-        <h2 className="text-3xl font-medium tracking-tight">Hôm nay bạn đang ở vibe nào?</h2>
+        <h2 className="text-3xl font-medium tracking-tight">{t("vibeQuestion")}</h2>
         <div className="grid grid-cols-3 gap-6 sm:grid-cols-6">
           {MOODS.map(m => (
             <button
@@ -87,9 +88,9 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
     return (
       <div className="flex flex-col space-y-8 py-12 animate-in slide-in-from-bottom-4 fade-in duration-500">
         <h2 className="text-2xl font-medium leading-relaxed">
-          Okay, kể tôi nghe một chút. <br />
+          {t("okayTellMe")} <br />
           <span className="text-[var(--muted-foreground)]">
-            {initialPrompts.primary?.text || "Có điều gì đáng nhớ hôm nay không?"}
+            {initialPrompts.primary?.text || t("defaultPrompt")}
           </span>
         </h2>
         <Textarea 
@@ -100,7 +101,7 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
         />
         <div className="flex justify-end pt-8">
           <Button onClick={handlePrimarySave} size="lg" className="rounded-full">
-            {initialPrompts.followUp ? "Tiếp tục" : "Lưu vào Lore"}
+            {initialPrompts.followUp ? t("continue") : t("saveToLore")}
           </Button>
         </div>
       </div>
@@ -111,20 +112,20 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
     return (
       <div className="flex flex-col space-y-8 py-12 animate-in slide-in-from-bottom-4 fade-in duration-500">
         <h2 className="text-2xl font-medium leading-relaxed">
-          Đào sâu thêm một chút? <br />
+          {t("digDeeper")} <br />
           <span className="text-[var(--muted-foreground)]">
             {initialPrompts.followUp?.text}
           </span>
         </h2>
         <Textarea 
           className="min-h-[150px] text-lg leading-relaxed border-none focus-visible:ring-0 p-0 resize-none"
-          placeholder="Cứ viết tự nhiên..."
+          placeholder={t("writeNaturally")}
           value={followUpAnswer}
           onChange={(e) => setFollowUpAnswer(e.target.value)}
         />
         <div className="flex items-center justify-end gap-4 pt-8">
-          <Button variant="ghost" onClick={handleComplete} className="rounded-full">Thôi, vậy đủ rồi</Button>
-          <Button onClick={handleComplete} size="lg" className="rounded-full">Lưu vào Lore</Button>
+          <Button variant="ghost" onClick={handleComplete} className="rounded-full">{t("thatsEnough")}</Button>
+          <Button onClick={handleComplete} size="lg" className="rounded-full">{t("saveToLore")}</Button>
         </div>
       </div>
     )
@@ -136,9 +137,9 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
         <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[var(--muted)] text-4xl">
           ✨
         </div>
-        <h2 className="text-3xl font-medium tracking-tight">Đã lưu vào Lore</h2>
-        <Button variant="outline" size="lg" className="rounded-full mt-8" onClick={() => router.push("/vi")}>
-          Quay lại trang chủ
+        <h2 className="text-3xl font-medium tracking-tight">{t("savedTitle")}</h2>
+        <Button variant="outline" size="lg" className="rounded-full mt-8" onClick={() => router.push(`/${locale}`)}>
+          {t("backHome")}
         </Button>
       </div>
     )

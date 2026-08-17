@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useTranslations, useLocale } from "next-intl"
 import { Card, CardContent } from "@/components/ui/Card"
 
 interface EntryCardProps {
@@ -10,8 +11,11 @@ interface EntryCardProps {
 }
 
 export function EntryCard({ id, date, mood, prompt, answerPreview }: EntryCardProps) {
+  const t = useTranslations("Library")
+  const locale = useLocale()
+
   return (
-    <Link href={`/vi/library/${id}`} className="block transition-transform hover:-translate-y-1">
+    <Link href={`/${locale}/library/${id}`} className="block transition-transform hover:-translate-y-1">
       <Card className="h-full cursor-pointer hover:shadow-md transition-shadow">
         <CardContent className="p-6 flex flex-col space-y-4">
           <div className="flex items-center justify-between">
@@ -24,7 +28,7 @@ export function EntryCard({ id, date, mood, prompt, answerPreview }: EntryCardPr
               {prompt}
             </h4>
             <p className="text-[var(--muted-foreground)] line-clamp-3 leading-relaxed">
-              {answerPreview || <span className="italic">Chưa có câu trả lời</span>}
+              {answerPreview || <span className="italic">{t("noAnswer")}</span>}
             </p>
           </div>
         </CardContent>

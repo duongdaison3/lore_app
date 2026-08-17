@@ -2,6 +2,7 @@ import { getJournalEntries } from "@/app/actions/library"
 import { EntryCard } from "@/components/library/EntryCard"
 import { LibraryFilters } from "@/components/library/LibraryFilters"
 import { EmptyState } from "@/components/ui/EmptyState"
+import { getTranslations } from "next-intl/server"
 
 interface LibraryPageProps {
   searchParams: {
@@ -12,6 +13,8 @@ interface LibraryPageProps {
 }
 
 export default async function LibraryPage({ searchParams }: LibraryPageProps) {
+  const t = await getTranslations("Library")
+  
   const { entries, total } = await getJournalEntries({
     q: searchParams.q,
     mood: searchParams.mood,
@@ -20,7 +23,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
 
   return (
     <div className="max-w-4xl mx-auto py-8 px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <h1 className="text-4xl font-bold mb-8">Thư viện Lore</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("libraryTitle")}</h1>
       
       <LibraryFilters />
 
@@ -28,7 +31,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {entries.map((entry) => {
             const firstAnswer = entry.answers[0]
-            const promptText = firstAnswer?.prompt?.text || "Không có câu hỏi"
+            const promptText = firstAnswer?.prompt?.text || t("noPrompt")
             const contentPreview = firstAnswer?.content || ""
             
             return (
@@ -46,8 +49,8 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       ) : (
         <div className="mt-20">
           <EmptyState 
-            title={searchParams.date ? "Ngày hôm nay vẫn còn trống." : "Chưa có lore nào ở đây."}
-            description="Hãy viết entry đầu tiên hoặc thử thay đổi bộ lọc tìm kiếm nhé."
+            title={searchParams.date ? t("emptyDate") : t("emptyLibrary")}
+            description={t("emptyDesc")}
           />
         </div>
       )}
