@@ -56,7 +56,8 @@ export async function fallbackPrompt(context: PromptEngineContext): Promise<Prom
 export async function generatePersonalizedPrompt(
   candidatePromptText: string, 
   userMood: string, 
-  preferredTones: string[]
+  preferredTones: string[],
+  longTermMemories: { type: string, content: string }[] = []
 ): Promise<AIPromptResult | null> {
   const apiKey = getRotatedApiKey();
   if (!apiKey) {
@@ -85,11 +86,15 @@ export async function generatePersonalizedPrompt(
         - Respect the user's preferred tones if possible.
         - Do NOT diagnose, judge, or use manipulative emotional language.
         - Avoid clichés like "hãy", "bạn có bao giờ", "điều gì khiến bạn".
+        
+        You have access to the user's LONG-TERM MEMORIES. Use these to make the prompt feel highly personal, but only if they naturally fit the context. Do NOT forcefully inject memories if they are irrelevant to the current candidate prompt or mood.
       `,
       prompt: `
         Candidate Prompt: "${candidatePromptText}"
         User's Current Mood: "${userMood}"
         User's Preferred Tones: [${preferredTones.join(', ')}]
+        Long-Term Memories:
+        ${longTermMemories.map(m => `- [${m.type}] ${m.content}`).join('\n')}
         
         Return the result in strictly formatted JSON according to the schema.
       `,

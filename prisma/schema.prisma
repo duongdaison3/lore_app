@@ -7,17 +7,19 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  username     String         @unique
-  email        String         @unique
-  phone        String?
-  name         String?
-  passwordHash   String
-  preferredTones String[]       @default([])
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  
+  id                     String   @id @default(cuid())
+  username               String   @unique
+  email                  String   @unique
+  phone                  String?
+  name                   String?
+  passwordHash           String
+  preferredTones         String[] @default([])
+  personalizationEnabled Boolean  @default(true)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
   journalEntries DailyEntry[]
+  memories       Memory[]
 }
 
 model Prompt {
@@ -26,8 +28,8 @@ model Prompt {
   isFollowUp        Boolean  @default(false)
   active            Boolean  @default(true)
   language          String   @default("vi")
-  category          String   // reflection, memory, gratitude, relationship, identity, creative, future, unhinged
-  tone              String   // gentle, deep, playful, random, unhinged
+  category          String // reflection, memory, gratitude, relationship, identity, creative, future, unhinged
+  tone              String // gentle, deep, playful, random, unhinged
   intensity         Int      @default(1) // 1-10
   targetGoals       String[]
   suitableMoods     String[]
@@ -41,7 +43,7 @@ model Prompt {
 
 model DailyEntry {
   id          String   @id @default(cuid())
-  localDate   String   // e.g., "2026-08-17" to enforce one per day per user
+  localDate   String // e.g., "2026-08-17" to enforce one per day per user
   mood        String
   isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
@@ -50,7 +52,8 @@ model DailyEntry {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  answers EntryAnswer[]
+  answers  EntryAnswer[]
+  memories Memory[]
 
   @@unique([userId, localDate])
   @@index([userId])
@@ -67,9 +70,27 @@ model EntryAnswer {
   entry   DailyEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 
   promptId String
-  prompt   Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  prompt   Prompt @relation(fields: [promptId], references: [id], onDelete: Cascade)
 
   @@unique([entryId, promptId])
   @@index([entryId])
   @@index([promptId])
+}
+
+model Memory {
+  id            String    @id @default(cuid())
+  userId        String
+  type          String // person, preference, goal, recurring_theme, important_event, writing_preference
+  content       String
+  sourceEntryId String?
+  confidence    Float // 0.0 to 1.0
+  status        String // candidate, active, rejected, expired
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  expiresAt     DateTime?
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceEntry DailyEntry? @relation(fields: [sourceEntryId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status])
 }

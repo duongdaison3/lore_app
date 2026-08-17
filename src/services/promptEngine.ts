@@ -20,6 +20,7 @@ export interface PromptEngineContext {
   // Candidate prompts from the database
   candidates: Prompt[];
   currentDate: Date;
+  activeMemories?: { type: string; content: string }[];
 }
 
 export async function getDailyPrompt(context: PromptEngineContext): Promise<Prompt | null> {
@@ -96,7 +97,8 @@ export async function getDailyPrompt(context: PromptEngineContext): Promise<Prom
     const aiResult = await generatePersonalizedPrompt(
       bestCandidate.text,
       currentMood,
-      userPreferences.preferredTones
+      userPreferences.preferredTones,
+      context.activeMemories || []
     );
 
     if (aiResult) {

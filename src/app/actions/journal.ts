@@ -104,5 +104,24 @@ export async function completeEntry(entryId: string) {
     data: { isCompleted: true },
   })
 
+  // Fetch the full text to pass to the memory engine
+  const fullEntry = await prisma.dailyEntry.findUnique({
+    where: { id: entryId },
+    include: { answers: { include: { prompt: true } } }
+  })
+
+  if (fullEntry) {
+    const entryText = fullEntry.answers
+      .map(a => `Q: ${a.prompt.text}\nA: ${a.content}`)
+      .join("\n\n")
+
+    // Fire and forget AI memory extraction
+    import("@/services/aiMemoryEngine").then(({ processJournalEntryForMemories }) => {
+      if (session?.user?.id) {
+        processJournalEntryForMemories(session.user.id, entryId, entryText).catch(console.error)
+      }
+    })
+  }
+
   return { success: true }
 }
