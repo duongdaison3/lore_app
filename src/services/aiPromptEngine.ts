@@ -1,5 +1,5 @@
 import { generateObject } from 'ai';
-import { google } from '@ai-sdk/google';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { z } from 'zod';
 import { Prompt, PromptEngineContext, getDailyPrompt as getDeterministicPrompt } from './promptEngine';
 
@@ -25,12 +25,26 @@ function logAIOperation(operation: string, latencyMs: number, success: boolean, 
   }));
 }
 
+function getRotatedApiKey(): string | null {
+  const rawKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  if (!rawKey) return null;
+
+  // Split by comma and remove any quotes or whitespace
+  const keys = rawKey.split(',').map(k => k.replace(/["']/g, '').trim()).filter(Boolean);
+  
+  if (keys.length === 0) return null;
+  
+  // Pick a random key from the array
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  return randomKey;
+}
+
 export function validatePrompt(rawOutput: unknown): AIPromptResult | null {
   const result = promptSchema.safeParse(rawOutput);
   if (result.success) {
     return result.data;
   }
-  console.warn("AI prompt validation failed:", result.error.errors);
+  console.warn("AI prompt validation failed:", result.error.message);
   return null;
 }
 
@@ -44,17 +58,19 @@ export async function generatePersonalizedPrompt(
   userMood: string, 
   preferredTones: string[]
 ): Promise<AIPromptResult | null> {
-  if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+  const apiKey = getRotatedApiKey();
+  if (!apiKey) {
     console.warn("GOOGLE_GENERATIVE_AI_API_KEY not found. Skipping AI personalization.");
     return null;
   }
 
+  const googleProvider = createGoogleGenerativeAI({ apiKey });
   const model = 'gemini-1.5-flash';
   const startTime = Date.now();
   
   try {
     const { object } = await generateObject({
-      model: google(model),
+      model: googleProvider(model),
       schema: promptSchema,
       system: `
         You are a journaling AI for the app 'Lore'.
@@ -98,16 +114,18 @@ export async function generateFollowUpPrompt(
   previousAnswer: string,
   userMood: string
 ): Promise<AIPromptResult | null> {
-  if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+  const apiKey = getRotatedApiKey();
+  if (!apiKey) {
     return null;
   }
 
+  const googleProvider = createGoogleGenerativeAI({ apiKey });
   const model = 'gemini-1.5-flash';
   const startTime = Date.now();
 
   try {
     const { object } = await generateObject({
-      model: google(model),
+      model: googleProvider(model),
       schema: promptSchema,
       system: `
         You are a journaling AI for the app 'Lore'.
