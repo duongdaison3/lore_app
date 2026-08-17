@@ -21,8 +21,12 @@ export default function RegisterPage() {
       await registerAction(formData)
       toast.success("Đăng ký thành công! Vui lòng đăng nhập.")
       router.push("/vi/login")
-    } catch (err: any) {
-      toast.error(err.message || "Đã có lỗi xảy ra")
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message || "Đã có lỗi xảy ra")
+      } else {
+        toast.error("Đã có lỗi xảy ra")
+      }
     } finally {
       setLoading(false)
     }

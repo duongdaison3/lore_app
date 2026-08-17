@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useTranslations } from "next-intl"
-import { saveMood, getPrompts, saveDraft, completeEntry } from "@/app/actions/journal"
+import { saveMood, saveDraft, completeEntry } from "@/app/actions/journal"
 import { Button } from "@/components/ui/Button"
 import { Textarea } from "@/components/ui/Textarea"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const MOODS = ["😵‍💫", "😐", "🙂", "🥰", "🔥", "🫠"]
 
@@ -18,20 +19,20 @@ interface Prompt {
 export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Prompt | null, followUp: Prompt | null } }) {
   const t = useTranslations("Journal")
   const [step, setStep] = useState<"mood" | "primary" | "followup" | "complete">("mood")
-  const [mood, setMood] = useState("")
   const [entryId, setEntryId] = useState<string | null>(null)
+  
+  const router = useRouter()
   
   const [primaryAnswer, setPrimaryAnswer] = useState("")
   const [followUpAnswer, setFollowUpAnswer] = useState("")
 
   const handleMoodSelect = async (selectedMood: string) => {
-    setMood(selectedMood)
     try {
       const offset = new Date().getTimezoneOffset()
       const { entryId } = await saveMood(selectedMood, offset)
       setEntryId(entryId)
       setStep("primary")
-    } catch (e) {
+    } catch {
       toast.error(t("error"))
     }
   }
@@ -45,7 +46,7 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
       } else {
         await handleComplete()
       }
-    } catch (e) {
+    } catch {
       toast.error(t("error"))
     }
   }
@@ -58,7 +59,7 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
       }
       await completeEntry(entryId)
       setStep("complete")
-    } catch (e) {
+    } catch {
       toast.error(t("error"))
     }
   }
@@ -136,7 +137,7 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
           ✨
         </div>
         <h2 className="text-3xl font-medium tracking-tight">Đã lưu vào Lore</h2>
-        <Button variant="outline" size="lg" className="rounded-full mt-8" onClick={() => window.location.href = "/vi"}>
+        <Button variant="outline" size="lg" className="rounded-full mt-8" onClick={() => router.push("/vi")}>
           Quay lại trang chủ
         </Button>
       </div>

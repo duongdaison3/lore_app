@@ -1,6 +1,8 @@
 "use server"
 
 import { signIn, signOut } from "@/auth"
+import bcrypt from "bcryptjs"
+import { prisma } from "@/lib/prisma"
 
 export async function loginAction(formData: FormData) {
   await signIn("credentials", formData)
@@ -22,10 +24,6 @@ export async function registerAction(formData: FormData) {
   if (password !== confirmPassword) {
     throw new Error("Passwords do not match")
   }
-
-  const bcrypt = require("bcryptjs")
-  const { PrismaClient } = require("@prisma/client")
-  const prisma = new PrismaClient()
 
   const existing = await prisma.user.findFirst({
     where: { OR: [{ username }, { email }] }

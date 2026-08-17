@@ -17,8 +17,8 @@ export default function LoginPage() {
     const formData = new FormData(e.currentTarget)
     try {
       await loginAction(formData)
-    } catch (err: any) {
-      if (err.message.includes("CredentialsSignin")) {
+    } catch (err: unknown) {
+      if (err instanceof Error && err.message.includes("CredentialsSignin")) {
          toast.error("Sai tài khoản hoặc mật khẩu")
       }
     } finally {

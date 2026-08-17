@@ -12,7 +12,7 @@ export default async function JournalPage() {
   let prompts
   try {
     prompts = await getPrompts()
-  } catch (e) {
+  } catch {
     // Fallback if DB not seeded or other error
     prompts = {
       primary: { id: "p1", text: "Nếu hôm nay là một tập phim, bạn sẽ đặt tên nó là gì?", isFollowUp: false },
@@ -22,6 +22,7 @@ export default async function JournalPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <JournalFlow initialPrompts={prompts as any} />
     </div>
   )
