@@ -1,0 +1,19 @@
+{
+  "Common": {
+    "loading": "Đang tải...",
+    "error": "Đã có lỗi xảy ra",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "back": "Quay lại"
+  },
+  "Journal": {
+    "emptyStateTitle": "Chưa có gì ở đây cả",
+    "emptyStateDesc": "Không cần viết hay. Viết như đang nhắn cho chính mình.",
+    "newEntry": "Bắt đầu viết",
+    "placeholder": "Bạn đang nghĩ gì hôm nay...?"
+  },
+  "Theme": {
+    "toggleLight": "Giao diện sáng",
+    "toggleDark": "Giao diện tối"
+  }
+}

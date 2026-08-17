@@ -1,0 +1,19 @@
+{
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back"
+  },
+  "Journal": {
+    "emptyStateTitle": "Nothing here yet",
+    "emptyStateDesc": "You don't need to write perfectly. Write as if you're texting yourself.",
+    "newEntry": "Start writing",
+    "placeholder": "What's on your mind today...?"
+  },
+  "Theme": {
+    "toggleLight": "Light theme",
+    "toggleDark": "Dark theme"
+  }
+}

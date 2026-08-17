@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String         @id @default(cuid())
+  username     String         @unique
+  email        String         @unique
+  phone        String?
+  name         String?
+  passwordHash String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  
+  journalEntries DailyEntry[]
+}
+
+model Prompt {
+  id         String   @id @default(cuid())
+  text       String
+  isFollowUp Boolean  @default(false)
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  answers EntryAnswer[]
+}
+
+model DailyEntry {
+  id          String   @id @default(cuid())
+  localDate   String   // e.g., "2026-08-17" to enforce one per day per user
+  mood        String
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  answers EntryAnswer[]
+
+  @@unique([userId, localDate])
+  @@index([userId])
+}
+
+model EntryAnswer {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  isDraft   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  entryId String
+  entry   DailyEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  promptId String
+  prompt   Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  @@unique([entryId, promptId])
+  @@index([entryId])
+  @@index([promptId])
+}
