@@ -81,6 +81,10 @@
   },
   "Home": {
     "morning": "Good morning,",
-    "howAreYou": "How are you feeling today?"
+    "howAreYou": "How are you feeling today?",
+    "welcomeTitle": "A tiny daily conversation with yourself.",
+    "welcomeDesc": "Capture your thoughts, emotions, and memories. Receive thoughtful AI prompts to understand yourself better.",
+    "loginBtn": "Log in",
+    "registerBtn": "Get started"
   }
 }

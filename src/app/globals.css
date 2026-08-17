@@ -17,63 +17,79 @@
   
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-space), Arial, Helvetica, sans-serif;
+  --font-heading: var(--font-archivo), var(--font-space), sans-serif;
 }
 
 :root {
-  /* Warm white / soft zinc light mode */
-  --background: #faf9f8;
-  --foreground: #1c1c1c;
+  /* Warm Journal Brown & Ink Violet */
+  --background: #FFFBEB;
+  --foreground: #0F172A;
 
-  --card: #ffffff;
-  --card-foreground: #1c1c1c;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
 
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
+  --muted: #F8F3F0;
+  --muted-foreground: #475569;
 
-  --border: #e4e4e7;
-  --input: #e4e4e7;
+  --border: #F1E8E2;
+  --input: #F1E8E2;
 
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
+  --primary: #92400E;
+  --primary-foreground: #FFFFFF;
+  
+  --accent: #6366F1;
+  --accent-foreground: #FFFFFF;
 
   --radius: 12px;
 }
 
 .dark {
-  /* Charcoal / deep slate dark mode */
-  --background: #111110;
-  --foreground: #ededed;
+  /* Deep Ink & Muted Light */
+  --background: #0F172A;
+  --foreground: #FFFBEB;
 
-  --card: #1c1c1b;
-  --card-foreground: #ededed;
+  --card: #1E293B;
+  --card-foreground: #FFFBEB;
 
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
 
-  --border: #27272a;
-  --input: #27272a;
+  --border: #334155;
+  --input: #334155;
 
-  --primary: #fafafa;
-  --primary-foreground: #18181b;
+  --primary: #FFFBEB;
+  --primary-foreground: #92400E;
+  
+  --accent: #818CF8;
+  --accent-foreground: #0F172A;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 /* Subtle transitions and restrained motion */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  transition-duration: 300ms;
 }
 
 .focus-ring {

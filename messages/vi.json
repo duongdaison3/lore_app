@@ -81,6 +81,10 @@
   },
   "Home": {
     "morning": "Chào buổi sáng,",
-    "howAreYou": "Hôm nay bạn cảm thấy thế nào?"
+    "howAreYou": "Hôm nay bạn cảm thấy thế nào?",
+    "welcomeTitle": "Một cuộc trò chuyện nhỏ mỗi ngày với chính bạn.",
+    "welcomeDesc": "Ghi chép lại những suy nghĩ, cảm xúc và kỉ niệm. Nhận những câu hỏi gợi mở từ AI để hiểu rõ bản thân hơn.",
+    "loginBtn": "Đăng nhập",
+    "registerBtn": "Bắt đầu ngay"
   }
 }

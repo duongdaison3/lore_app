@@ -1,11 +1,25 @@
 import { Metadata } from 'next';
+import { Archivo, Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from 'sonner';
 import { Navigation } from '@/components/Navigation';
+import { auth } from '@/auth';
 import '../globals.css';
+
+const archivo = Archivo({ 
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-archivo',
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-space',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Lore - A tiny daily conversation with yourself',
@@ -35,10 +49,11 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const session = await auth();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>
+    <html lang={locale} className={`${archivo.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
@@ -47,7 +62,7 @@ export default async function LocaleLayout({
             disableTransitionOnChange
           >
             <div className="min-h-screen flex flex-col bg-[var(--background)]">
-              <Navigation />
+              <Navigation isAuthenticated={!!session} />
               <main className="flex-1 mx-auto w-full max-w-3xl px-6 py-8">
                 {children}
               </main>
