@@ -1,0 +1,7 @@
+{
+  "app": {
+    "name": "Lore App",
+    "framework": "nextjs",
+    "httpPort": 3000
+  }
+}

@@ -3,11 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from "@/components/ui/Button";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { auth } from '@/auth';
 
 export default async function Home() {
   const session = await auth();
+  const locale = await getLocale();
   const t = await getTranslations('Journal');
   const th = await getTranslations('Home');
 
@@ -41,12 +42,12 @@ export default async function Home() {
           </div>
           
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-8 w-full sm:w-auto">
-            <Link href="./login" className="w-full sm:w-auto">
+            <Link href={`/${locale}/login`} className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-8 h-12 text-base font-medium shadow-sm hover:shadow-md transition-all">
                 {th("loginBtn")}
               </Button>
             </Link>
-            <Link href="./register" className="w-full sm:w-auto">
+            <Link href={`/${locale}/register`} className="w-full sm:w-auto">
               <Button variant="default" size="lg" className="w-full sm:w-auto rounded-full px-8 h-12 text-base font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 {th("registerBtn")}
               </Button>

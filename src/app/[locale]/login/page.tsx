@@ -18,6 +18,7 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     const formData = new FormData(e.currentTarget)
+    formData.append("redirectTo", `/${locale}`)
     try {
       await loginAction(formData)
     } catch (err: unknown) {
@@ -30,11 +31,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center p-4">
-      <Card className="w-full max-w-md animate-in fade-in zoom-in-95 duration-500">
-        <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-2xl">{t("login")}</CardTitle>
-          <p className="text-sm text-[var(--muted-foreground)]">{t("loginWelcome")}</p>
+    <div className="relative flex min-h-[80vh] items-center justify-center p-4 overflow-hidden">
+      {/* Artistic glowing orbs */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg aspect-square bg-[var(--primary)]/5 rounded-full blur-[100px] pointer-events-none" />
+      
+      <Card className="relative z-10 w-full max-w-md animate-in fade-in zoom-in-95 duration-500 shadow-xl border-[var(--border)]/50 bg-[var(--card)]/90 backdrop-blur-md rounded-2xl">
+        <CardHeader className="text-center space-y-2 pb-6">
+          <CardTitle className="text-3xl font-heading tracking-tight">{t("login")}</CardTitle>
+          <p className="text-base text-[var(--muted-foreground)] font-sans">{t("loginWelcome")}</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
