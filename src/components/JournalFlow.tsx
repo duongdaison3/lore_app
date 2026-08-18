@@ -29,11 +29,11 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0)
   const [primaryAnswers, setPrimaryAnswers] = useState<Record<string, string>>({})
   const currentPrimaryPrompt = initialPrompts.primary[currentPromptIndex]
-  const currentPrimaryAnswer = primaryAnswers[currentPrimaryPrompt?.id] || ""
+  const promptId = currentPrimaryPrompt?.id || `fallback-${currentPromptIndex}`
+  const currentPrimaryAnswer = primaryAnswers[promptId] || ""
 
   const setPrimaryAnswer = (val: string) => {
-    if (!currentPrimaryPrompt) return
-    setPrimaryAnswers(prev => ({ ...prev, [currentPrimaryPrompt.id]: val }))
+    setPrimaryAnswers(prev => ({ ...prev, [promptId]: val }))
   }
 
   const [followUpAnswer, setFollowUpAnswer] = useState("")
@@ -50,9 +50,9 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
   }
 
   const handlePrimarySave = async () => {
-    if (!entryId || !currentPrimaryPrompt || !currentPrimaryAnswer) return
+    if (!entryId || !currentPrimaryAnswer) return
     try {
-      await saveDraft(entryId, currentPrimaryPrompt.id, currentPrimaryAnswer)
+      await saveDraft(entryId, promptId, currentPrimaryAnswer)
       
       const isLastPrompt = currentPromptIndex === initialPrompts.primary.length - 1;
       
