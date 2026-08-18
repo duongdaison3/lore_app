@@ -106,5 +106,42 @@
     "milestones": "Cột mốc đáng nhớ",
     "hideTitle": "Ẩn khỏi Kỷ niệm",
     "hiddenSuccess": "Đã ẩn dòng kỷ niệm này."
+  },
+  "Settings": {
+    "title": "Cài đặt",
+    "notifications": "Thông báo & Nhắc nhở",
+    "notificationsDesc": "Lore sẽ thỉnh thoảng gửi một câu hỏi nhỏ để bạn có thể dừng lại vài phút trong ngày.",
+    "enableReminders": "Nhắc nhở nhẹ nhàng",
+    "enableRemindersDesc": "Bật để nhận câu hỏi từ Lore.",
+    "preferredTime": "Thời gian nhận",
+    "preferredTimeDesc": "Chọn thời điểm bạn thường rảnh rỗi nhất.",
+    "timezone": "Múi giờ hiện tại",
+    "save": "Lưu thay đổi",
+    "saving": "Đang lưu...",
+    "saveSuccess": "Đã lưu cài đặt",
+    "saveError": "Có lỗi khi lưu cài đặt"
+  },
+  "Privacy": {
+    "title": "Quyền riêng tư & Ký ức",
+    "description": "Lore không phải lúc nào cũng đúng. Những điều dưới đây là các suy luận được rút ra từ những gì bạn từng viết.",
+    "aiPersonalization": "Cá nhân hóa AI",
+    "aiPersonalizationDesc": "Cho phép Lore học hỏi từ các câu trả lời của bạn để đưa ra những câu hỏi phù hợp hơn.",
+    "memories": "Ký ức của bạn",
+    "noMemories": "Lore chưa ghi nhớ điều gì về bạn. Hãy tiếp tục viết nhé.",
+    "confidenceHigh": "Khá chắc chắn",
+    "confidenceMedium": "Có thể là vậy",
+    "confidenceLow": "Suy đoán nhỏ",
+    "sourceDate": "Rút ra từ bài viết ngày {date}",
+    "deleteMemory": "Xóa ký ức này",
+    "clearAll": "Xóa toàn bộ ký ức",
+    "clearAllConfirm": "Bạn có chắc chắn muốn xóa toàn bộ những gì Lore đã học được về bạn không? Hành động này không thể hoàn tác.",
+    "exportData": "Tải về dữ liệu (JSON)",
+    "exportDesc": "Tải toàn bộ nhật ký của bạn về máy.",
+    "deleteAccount": "Xóa tài khoản",
+    "deleteAccountConfirm": "Xóa vĩnh viễn tài khoản và toàn bộ nhật ký. Hành động này KHÔNG THỂ hoàn tác. Bạn chắc chứ?",
+    "confirm": "Tôi chắc chắn",
+    "cancel": "Hủy",
+    "success": "Thành công",
+    "error": "Có lỗi xảy ra"
   }
 }

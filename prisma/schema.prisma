@@ -20,6 +20,19 @@ model User {
 
   journalEntries DailyEntry[]
   memories       Memory[]
+  notificationPreference NotificationPreference?
+}
+
+model NotificationPreference {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enabled          Boolean  @default(false)
+  preferredTime    String   @default("20:00") // HH:mm format
+  timezone         String   @default("UTC")
+  lastSentAt       DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model Prompt {

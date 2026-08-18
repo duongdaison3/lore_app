@@ -2,7 +2,8 @@ import { getYourLore } from "@/app/actions/lore"
 import { getTranslations } from "next-intl/server"
 import { HideMemoryButton } from "./HideMemoryButton"
 
-export default async function LorePage({ params: { locale } }: { params: { locale: string } }) {
+export default async function LorePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   const t = await getTranslations("Lore")
   
   // Await the data

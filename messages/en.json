@@ -106,5 +106,42 @@
     "milestones": "Personal Milestones",
     "hideTitle": "Hide from Lore",
     "hiddenSuccess": "Memory hidden successfully."
+  },
+  "Settings": {
+    "title": "Settings",
+    "notifications": "Notifications & Reminders",
+    "notificationsDesc": "Lore will occasionally send a small question to help you pause for a moment during your day.",
+    "enableReminders": "Gentle Reminders",
+    "enableRemindersDesc": "Enable to receive questions from Lore.",
+    "preferredTime": "Preferred Time",
+    "preferredTimeDesc": "Choose when you are usually free.",
+    "timezone": "Current Timezone",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "saveSuccess": "Settings saved successfully",
+    "saveError": "Error saving settings"
+  },
+  "Privacy": {
+    "title": "Privacy & Memories",
+    "description": "Lore isn't always right. The following are inferences drawn from what you've written.",
+    "aiPersonalization": "AI Personalization",
+    "aiPersonalizationDesc": "Allow Lore to learn from your answers to ask better questions.",
+    "memories": "Your Memories",
+    "noMemories": "Lore hasn't remembered anything about you yet. Keep writing.",
+    "confidenceHigh": "Pretty sure",
+    "confidenceMedium": "Maybe",
+    "confidenceLow": "Just a guess",
+    "sourceDate": "Inferred from entry on {date}",
+    "deleteMemory": "Delete this memory",
+    "clearAll": "Clear all memories",
+    "clearAllConfirm": "Are you sure you want to delete everything Lore has learned about you? This cannot be undone.",
+    "exportData": "Export Data (JSON)",
+    "exportDesc": "Download your entire journal.",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirm": "Permanently delete your account and all journal entries. This CANNOT be undone. Are you sure?",
+    "confirm": "I'm sure",
+    "cancel": "Cancel",
+    "success": "Success",
+    "error": "An error occurred"
   }
 }

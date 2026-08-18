@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl"
 import { useTheme } from "next-themes"
-import { Moon, Sun, Globe } from "lucide-react"
+import { Moon, Sun, Globe, Settings } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -59,6 +59,9 @@ export function Navigation({ isAuthenticated }: { isAuthenticated: boolean }) {
               </Link>
               <Link href={`/${locale}/lore`} className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors px-2">
                 {tNav("lore")}
+              </Link>
+              <Link href={`/${locale}/settings`} className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors px-2" title={tNav("settings")}>
+                <Settings className="h-4 w-4" />
               </Link>
               <form action={logoutAction}>
                 <button type="submit" className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors px-2">
