@@ -8,11 +8,13 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card"
 import { toast } from "sonner"
 import Link from "next/link"
 import { useTranslations, useLocale } from "next-intl"
+import { Eye, EyeOff } from "lucide-react"
 
 export default function LoginPage() {
   const t = useTranslations("Auth")
   const locale = useLocale()
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -45,7 +47,17 @@ export default function LoginPage() {
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("password")}</label>
-              <Input type="password" name="password" required placeholder="••••••••" />
+              <div className="relative">
+                <Input type={showPassword ? "text" : "password"} name="password" required placeholder="••••••••" className="pr-10" />
+                <button 
+                  type="button" 
+                  onClick={() => setShowPassword(!showPassword)} 
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
             
             <div className="flex items-start gap-3 pt-2">

@@ -10,36 +10,30 @@ Lore is a Vietnamese-first daily journaling web application. This repository con
 - **UI Components**: custom components built with Tailwind, Sonner (Toasts), Lucide React (Icons)
 - **Validation**: Zod
 
-## Getting Started
+## Hướng dẫn sử dụng (Getting Started)
 
-### 1. Environment Setup
-Copy the `.env.example` (or create a `.env` file) and provide your PostgreSQL connection string:
-```env
-DATABASE_URL="postgresql://user:password@localhost:5432/lore"
-```
+Trải nghiệm Lore trực tuyến ngay tại: **[https://lore.xpea.io.vn/](https://lore.xpea.io.vn/)**
 
-### 2. Database Initialization
-Run Prisma to sync the schema to your database:
-```bash
-npx prisma db push
-```
-And generate the client:
-```bash
-npx prisma generate
-```
+### 1. Bắt đầu hành trình
+- Truy cập vào đường link trên và bấm **Bắt đầu ngay** (Register) để tạo một tài khoản mới.
+- Điền các thông tin cơ bản như: Tên hiển thị, Email và Mật khẩu.
 
-### 3. Running Locally
-Start the development server:
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. The application defaults to the Vietnamese locale (`/vi`).
+### 2. Viết nhật ký (Daily Journaling)
+- Từ màn hình chính (Dashboard), ứng dụng sẽ chào bạn và hỏi bạn đang cảm thấy thế nào hôm nay thông qua **Thang đo cảm xúc**.
+- Dựa vào cảm xúc của bạn, AI sẽ tự động chọn lọc và gợi ý một câu hỏi phù hợp để khơi nguồn cảm hứng (ví dụ: *Điều gì làm bạn mỉm cười hôm nay?*).
+- Bạn chỉ cần trả lời tự nhiên như đang nhắn tin cho một người bạn.
+- Sau câu trả lời đầu tiên, AI có thể đưa ra thêm 1-2 câu hỏi đào sâu (Follow-up) theo ngữ cảnh để giúp bạn hiểu rõ bản thân hơn.
+- Nhấn **Hoàn thành** để lưu lại nhật ký của ngày hôm nay.
 
-### 4. Building for Production
-```bash
-npm run build
-npm start
-```
+### 3. Đọc lại và Tạo ảnh Quote
+- Toàn bộ nhật ký của bạn được lưu trữ an toàn trong mục **Thư viện (Library)**.
+- Khi xem lại một bài viết, nếu bạn tâm đắc với một câu trả lời nào đó, hãy nhấn vào biểu tượng **Chia sẻ** (Share icon).
+- Ứng dụng sẽ tự động biến câu trả lời của bạn thành một tấm ảnh trích dẫn (Quote) tuyệt đẹp với hiệu ứng nghệ thuật để bạn có thể **Tải về** và chia sẻ.
+
+### 4. Khám phá bản thân (Lore Recap)
+- Khi bạn viết đủ nhiều, AI sẽ tự động đúc kết những điểm nổi bật thành **Kỷ niệm** (Memories).
+- Truy cập trang **Lore** để xem tổng kết tháng: Cảm xúc chủ đạo, những kỷ niệm nổi bật và những câu chuyện nhỏ thú vị về bạn.
+- Ở màn hình chính, bạn có thể nhấn vào banner **✨ Lore Recap** để trải nghiệm lại toàn bộ hành trình thấu hiểu bản thân dưới dạng một câu chuyện trượt dọc đẹp mắt (giống như Spotify Wrapped).
 
 ## Project Structure
 - `src/app/[locale]`: The Next.js App router with internationalization.

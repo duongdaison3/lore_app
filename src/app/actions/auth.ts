@@ -22,7 +22,7 @@ export async function registerAction(formData: FormData) {
   const confirmPassword = formData.get("confirmPassword") as string
 
   if (password !== confirmPassword) {
-    throw new Error("Passwords do not match")
+    return { success: false, error: "Passwords do not match" }
   }
 
   const existing = await prisma.user.findFirst({
@@ -30,20 +30,23 @@ export async function registerAction(formData: FormData) {
   })
 
   if (existing) {
-    throw new Error("User already exists")
+    return { success: false, error: "User already exists" }
   }
 
   const passwordHash = await bcrypt.hash(password, 10)
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      phone,
-      username,
-      passwordHash
-    }
-  })
-
-  return { success: true }
+  try {
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        phone,
+        username,
+        passwordHash
+      }
+    })
+    return { success: true }
+  } catch (err: any) {
+    return { success: false, error: err.message || "Failed to register user" }
+  }
 }
