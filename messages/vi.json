@@ -167,5 +167,16 @@
     "updating": "Đang cập nhật...",
     "updateSuccess": "Đã cập nhật hồ sơ",
     "updateError": "Lỗi khi cập nhật hồ sơ"
+  },
+  "Onboarding": {
+    "skip": "Bỏ qua",
+    "next": "Tiếp tục",
+    "start": "Bắt đầu ngay",
+    "step1Title": "Ghi chép tự nhiên",
+    "step1Desc": "Không cần viết hay. Chỉ cần viết như đang nhắn tin cho chính mình.",
+    "step2Title": "AI Trò chuyện",
+    "step2Desc": "Nhận những câu hỏi gợi mở từ AI để khám phá chiều sâu cảm xúc của bạn.",
+    "step3Title": "Nhìn lại Kỷ niệm",
+    "step3Desc": "Lore tự động đúc kết những mảnh ghép nhỏ bé thành câu chuyện của riêng bạn."
   }
 }

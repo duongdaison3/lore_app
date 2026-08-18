@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/Button";
 import { getTranslations, getLocale } from "next-intl/server";
 import { DynamicGreeting } from "@/components/ui/DynamicGreeting";
+import { OnboardingCarousel } from "@/components/home/OnboardingCarousel";
 import { auth } from '@/auth';
 
 export default async function Home() {
@@ -15,7 +16,9 @@ export default async function Home() {
 
   if (!session) {
     return (
-      <div className="relative min-h-[75vh] flex flex-col items-center justify-center overflow-hidden">
+      <>
+        <OnboardingCarousel />
+        <div className="relative min-h-[75vh] flex flex-col items-center justify-center overflow-hidden">
         <div className="relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 flex flex-col items-center text-center space-y-10 px-4 w-full">
           
           <div className="glass-panel p-10 md:p-14 rounded-3xl flex flex-col items-center w-full max-w-2xl shadow-xl">
@@ -55,6 +58,7 @@ export default async function Home() {
 
         </div>
       </div>
+      </>
     );
   }
 

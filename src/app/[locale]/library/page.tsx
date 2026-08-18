@@ -2,11 +2,19 @@ import { getJournalEntries } from "@/app/actions/library"
 import { EntryCard } from "@/components/library/EntryCard"
 import { LibraryFilters } from "@/components/library/LibraryFilters"
 import { EmptyState } from "@/components/ui/EmptyState"
-import { getTranslations } from "next-intl/server"
+import { getTranslations, getLocale } from "next-intl/server"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 export default async function LibraryPage({ searchParams: searchParamsPromise }: { searchParams: Promise<{ q?: string, mood?: string, date?: string }> }) {
   const t = await getTranslations("Library")
   const searchParams = await searchParamsPromise;
+  
+  const session = await auth();
+  if (!session?.user?.id) {
+    const locale = await getLocale();
+    redirect(`/${locale}/login`);
+  }
   
   const { entries, total } = await getJournalEntries({
     q: searchParams.q,

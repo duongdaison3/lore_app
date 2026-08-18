@@ -1,5 +1,7 @@
-import { getTranslations } from "next-intl/server"
+import { getTranslations, getLocale } from "next-intl/server"
 import { getNotificationPreferences } from "@/app/actions/settings"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 import { SettingsForm } from "./SettingsForm"
 import { PrivacyCenter } from "./PrivacyCenter"
 import { getPrivacyData } from "@/app/actions/privacy"
@@ -8,6 +10,13 @@ import { ProfileSettings } from "./ProfileSettings"
 
 export default async function SettingsPage() {
   const t = await getTranslations("Settings")
+
+  const session = await auth()
+  if (!session?.user?.id) {
+    const locale = await getLocale()
+    redirect(`/${locale}/login`)
+  }
+
   const prefs = await getNotificationPreferences()
   const privacyData = await getPrivacyData()
   const profile = await getProfile()

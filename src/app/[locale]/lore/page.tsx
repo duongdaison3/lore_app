@@ -1,10 +1,18 @@
 import { getYourLore } from "@/app/actions/lore"
 import { getTranslations } from "next-intl/server"
 import { HideMemoryButton } from "./HideMemoryButton"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 export default async function LorePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations("Lore")
+  const t = await getTranslations("Lore")
+
+  const session = await auth()
+  if (!session?.user?.id) {
+    redirect(`/${locale}/login`)
+  }
   
   // Await the data
   const data = await getYourLore(locale)

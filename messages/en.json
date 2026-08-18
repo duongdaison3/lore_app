@@ -167,5 +167,16 @@
     "updating": "Updating...",
     "updateSuccess": "Profile updated successfully",
     "updateError": "Error updating profile"
+  },
+  "Onboarding": {
+    "skip": "Skip",
+    "next": "Next",
+    "start": "Start now",
+    "step1Title": "Write naturally",
+    "step1Desc": "No need to write well. Just write like you're texting yourself.",
+    "step2Title": "AI Prompts",
+    "step2Desc": "Receive gentle questions from AI to explore the depth of your emotions.",
+    "step3Title": "Reflect on Memories",
+    "step3Desc": "Lore automatically pieces together small fragments into your own story."
   }
 }
