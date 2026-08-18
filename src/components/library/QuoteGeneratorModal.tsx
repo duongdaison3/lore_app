@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { useTranslations } from "next-intl"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/Dialog"
+import { Modal } from "@/components/ui/Modal"
 import { Button } from "@/components/ui/Button"
 import { toPng } from "html-to-image"
 import { Download, Loader2 } from "lucide-react"
@@ -43,12 +43,8 @@ export function QuoteGeneratorModal({ isOpen, onClose, quoteText, mood, date }: 
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md border-[var(--border)] bg-[var(--background)] shadow-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-center font-heading">{t("generateQuoteTitle")}</DialogTitle>
-        </DialogHeader>
-        
+    <Modal isOpen={isOpen} onClose={onClose} title={t("generateQuoteTitle")}>
+      <div className="flex flex-col space-y-6">
         <div className="flex justify-center p-4">
           <div 
             ref={quoteRef}
@@ -86,7 +82,7 @@ export function QuoteGeneratorModal({ isOpen, onClose, quoteText, mood, date }: 
             {t("downloadQuote")}
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </Modal>
   )
 }
