@@ -38,20 +38,20 @@ export async function getMonthlyFacts(userId: string, year: number, month: numbe
   const totalEntries = entries.length;
   
   // Calculate active days (unique localDates)
-  const uniqueDates = new Set(entries.map(e => e.localDate));
+  const uniqueDates = new Set(entries.map((e: any) => e.localDate));
   const activeDays = uniqueDates.size;
 
   // Mood distribution
   const moodCounts: Record<string, number> = {};
-  entries.forEach(e => {
+  entries.forEach((e: any) => {
     moodCounts[e.mood] = (moodCounts[e.mood] || 0) + 1;
   });
   const moodDistribution = Object.entries(moodCounts).map(([mood, count]) => ({ mood, count })).sort((a, b) => b.count - a.count);
 
   // Top categories
   const categoryCounts: Record<string, number> = {};
-  entries.forEach(e => {
-    e.answers.forEach(a => {
+  entries.forEach((e: any) => {
+    e.answers.forEach((a: any) => {
       if (a.prompt?.category) {
         categoryCounts[a.prompt.category] = (categoryCounts[a.prompt.category] || 0) + 1;
       }
@@ -138,13 +138,13 @@ export async function getOnThisDayEntries(userId: string) {
     }
   });
 
-  return historical.map(entry => {
+  return historical.map((entry: any) => {
     const targetLabel = targets.find(t => t.dateStr === entry.localDate)?.label || "Past";
     return {
       label: targetLabel,
       localDate: entry.localDate,
       mood: entry.mood,
-      answers: entry.answers.map(a => ({
+      answers: entry.answers.map((a: any) => ({
         promptText: a.prompt.text,
         content: a.content
       }))

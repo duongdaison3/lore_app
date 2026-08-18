@@ -50,7 +50,7 @@ export function validatePrompt(rawOutput: unknown): AIPromptResult | null {
   return null;
 }
 
-export async function fallbackPrompt(context: PromptEngineContext): Promise<Prompt | null> {
+export async function fallbackPrompt(context: PromptEngineContext): Promise<Prompt[] | null> {
   // Gracefully fallback to deterministic engine
   return getDeterministicPrompt(context);
 }

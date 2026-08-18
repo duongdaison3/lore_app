@@ -30,7 +30,7 @@ export default async function LibraryPage({ searchParams: searchParamsPromise }:
 
       {entries.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {entries.map((entry) => {
+          {entries.map((entry: any) => {
             const firstAnswer = entry.answers[0]
             const promptText = firstAnswer?.prompt?.text || t("noPrompt")
             const contentPreview = firstAnswer?.content || ""

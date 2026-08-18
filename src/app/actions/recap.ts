@@ -54,7 +54,7 @@ export async function getRecapData() {
     // Words
     for (const ans of entry.answers) {
       if (ans.content) {
-        totalWords += ans.content.split(/\s+/).filter(w => w.length > 0).length
+        totalWords += ans.content.split(/\s+/).filter((w: any) => w.length > 0).length
       }
     }
 
@@ -89,6 +89,6 @@ export async function getRecapData() {
     mostFrequentMood,
     totalWords,
     longestStreak,
-    memories: memories.map(m => m.content)
+    memories: memories.map((m: any) => m.content)
   }
 }

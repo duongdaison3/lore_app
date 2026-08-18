@@ -23,21 +23,21 @@ export default async function AnalyticsDashboardPage() {
   })
 
   // 1. DAU: distinct distinctIds per day (rough calculation in memory for demo)
-  const dauSet = new Set(productEvents.map(e => e.distinctId))
+  const dauSet = new Set(productEvents.map((e: any) => e.distinctId))
   const totalUsers = dauSet.size
 
   // 2. Completion Funnel
-  const journalStarted = productEvents.filter(e => e.name === "mood_selected").length
-  const journalCompleted = productEvents.filter(e => e.name === "journal_completed").length
+  const journalStarted = productEvents.filter((e: any) => e.name === "mood_selected").length
+  const journalCompleted = productEvents.filter((e: any) => e.name === "journal_completed").length
   const completionRate = journalStarted > 0 ? ((journalCompleted / journalStarted) * 100).toFixed(1) : "0"
 
   // 3. AI Health Metrics
-  const aiGenerations = aiEvents.filter(e => e.name === "ai_generation")
-  const aiSuccessCount = aiGenerations.filter(e => {
+  const aiGenerations = aiEvents.filter((e: any) => e.name === "ai_generation")
+  const aiSuccessCount = aiGenerations.filter((e: any) => {
     const meta = e.metadata as any
     return meta?.success === true
   }).length
-  const aiFallbackCount = aiGenerations.filter(e => {
+  const aiFallbackCount = aiGenerations.filter((e: any) => {
     const meta = e.metadata as any
     return meta?.fallback === true
   }).length
@@ -47,7 +47,7 @@ export default async function AnalyticsDashboardPage() {
   // Average Latency
   let totalLatency = 0;
   let latencyCount = 0;
-  aiGenerations.forEach(e => {
+  aiGenerations.forEach((e: any) => {
     const meta = e.metadata as any
     if (meta?.latencyMs) {
       totalLatency += meta.latencyMs;
@@ -57,12 +57,12 @@ export default async function AnalyticsDashboardPage() {
   const avgLatency = latencyCount > 0 ? (totalLatency / latencyCount).toFixed(0) : "0"
 
   // 4. Prompt Health Framework
-  const promptViewed = productEvents.filter(e => e.name === "prompt_viewed").length
-  const promptChanged = productEvents.filter(e => e.name === "prompt_changed").length
+  const promptViewed = productEvents.filter((e: any) => e.name === "prompt_viewed").length
+  const promptChanged = productEvents.filter((e: any) => e.name === "prompt_changed").length
   const rerollRate = promptViewed > 0 ? ((promptChanged / promptViewed) * 100).toFixed(1) : "0"
 
-  const followupOffered = productEvents.filter(e => e.name === "followup_offered").length
-  const followupAccepted = productEvents.filter(e => e.name === "followup_accepted").length
+  const followupOffered = productEvents.filter((e: any) => e.name === "followup_offered").length
+  const followupAccepted = productEvents.filter((e: any) => e.name === "followup_accepted").length
   const followupRate = followupOffered > 0 ? ((followupAccepted / followupOffered) * 100).toFixed(1) : "0"
 
   return (
@@ -125,7 +125,7 @@ export default async function AnalyticsDashboardPage() {
             <h3 className="text-sm font-medium text-[var(--foreground)] border-b border-[var(--border)] pb-4 mb-4">Recent Events Log</h3>
             
             <div className="space-y-3 h-64 overflow-y-auto pr-2">
-              {[...productEvents, ...aiEvents].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 50).map(e => (
+              {[...productEvents, ...aiEvents].sort((a: any, b: any) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 50).map((e: any) => (
                 <div key={e.id} className="text-sm flex flex-col p-2 bg-[var(--background)] rounded-md">
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-[var(--foreground)]">{e.name}</span>

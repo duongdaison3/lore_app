@@ -38,7 +38,7 @@ export default async function LorePage({ params }: { params: Promise<{ locale: s
               {t("onThisDay")}
             </h2>
             <div className="grid gap-8">
-              {onThisDay.map((entry, idx) => (
+              {onThisDay.map((entry: any, idx: number) => (
                 <div key={idx} className="glass-panel p-8 md:p-10 rounded-3xl shadow-md relative overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="absolute -top-4 -right-4 p-8 opacity-[0.03] text-8xl pointer-events-none group-hover:scale-110 group-hover:opacity-10 transition-all duration-700">
                     {entry.mood}
@@ -49,7 +49,7 @@ export default async function LorePage({ params }: { params: Promise<{ locale: s
                       <span className="w-1 h-1 rounded-full bg-[var(--primary)]/50" />
                       <span>{entry.localDate}</span>
                     </div>
-                    {entry.answers.map((ans, aIdx) => (
+                    {entry.answers.map((ans: any, aIdx: number) => (
                       <div key={aIdx} className="space-y-3">
                         <h3 className="text-xl font-heading font-medium text-[var(--foreground)]">{ans.promptText}</h3>
                         <p className="text-[var(--muted-foreground)] text-lg leading-relaxed whitespace-pre-wrap">{ans.content}</p>

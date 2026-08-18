@@ -24,7 +24,7 @@ describe('Prompt Engine', () => {
     };
 
     const result = await getDailyPrompt(context);
-    expect(result?.id).toBe('3');
+    expect(result?.[0]?.id).toBe('3');
   });
 
   it('selects based on user tone preference if mood matches multiple', async () => {
@@ -40,7 +40,7 @@ describe('Prompt Engine', () => {
     };
 
     const result = await getDailyPrompt(context);
-    expect(result?.id).toBe('2'); // Match tone
+    expect(result?.[0]?.id).toBe('2'); // Match tone
   });
 
   it('filters out prompts in cooldown period', async () => {
@@ -56,7 +56,7 @@ describe('Prompt Engine', () => {
 
     const result = await getDailyPrompt(context);
     // 1 is in cooldown (5 days), 4 is not
-    expect(result?.id).toBe('4');
+    expect(result?.[0]?.id).toBe('4');
   });
 
   it('penalizes recently seen categories', async () => {
@@ -90,7 +90,7 @@ describe('Prompt Engine', () => {
     const result = await getDailyPrompt(context2);
     // Both match mood (+10). 1 is reflection (-5 penalty). 2 is memory (no penalty).
     // 2 should win.
-    expect(result?.id).toBe('2');
+    expect(result?.[0]?.id).toBe('2');
   });
 
   it('falls back gracefully when all candidates are in cooldown', async () => {
@@ -111,6 +111,6 @@ describe('Prompt Engine', () => {
     const result = await getDailyPrompt(context);
     // Both are in cooldown. Fallback mode ignores cooldown but penalizes based on how recent they are.
     // 2 was seen 7 days ago, 1 was seen 1 day ago. 2 should win.
-    expect(result?.id).toBe('2');
+    expect(result?.[0]?.id).toBe('2');
   });
 });

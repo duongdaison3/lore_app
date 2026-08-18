@@ -72,7 +72,7 @@ export async function getPrompts() {
     include: { prompt: true }
   });
 
-  const recentPrompts = recentAnswers.map(ans => ({
+  const recentPrompts = recentAnswers.map((ans: any) => ({
     promptId: ans.promptId,
     date: ans.createdAt,
     text: ans.prompt.text
@@ -213,7 +213,7 @@ export async function completeEntry(entryId: string) {
 
   if (fullEntry) {
     const entryText = fullEntry.answers
-      .map(a => `Q: ${a.prompt.text}\nA: ${a.content}`)
+      .map((a: any) => `Q: ${a.prompt.text}\nA: ${a.content}`)
       .join("\n\n")
 
     // Fire and forget AI memory extraction

@@ -25,11 +25,11 @@ export async function getYourLore(locale: string = 'vi') {
   });
 
   const highlights = {
-    tinyWins: memories.filter(m => m.type === 'tiny_win'),
-    plotTwists: memories.filter(m => m.type === 'plot_twist'),
-    people: memories.filter(m => m.type === 'person'),
-    themes: memories.filter(m => m.type === 'recurring_theme'),
-    milestones: memories.filter(m => m.type === 'important_event')
+    tinyWins: memories.filter((m: any) => m.type === 'tiny_win'),
+    plotTwists: memories.filter((m: any) => m.type === 'plot_twist'),
+    people: memories.filter((m: any) => m.type === 'person'),
+    themes: memories.filter((m: any) => m.type === 'recurring_theme'),
+    milestones: memories.filter((m: any) => m.type === 'important_event')
   };
 
   return {

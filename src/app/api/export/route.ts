@@ -29,11 +29,11 @@ export async function GET() {
   const exportData = {
     exportDate: new Date().toISOString(),
     user: session.user.name || session.user.email,
-    entries: entries.map(entry => ({
+    entries: entries.map((entry: any) => ({
       date: entry.localDate,
       mood: entry.mood,
       createdAt: entry.createdAt,
-      answers: entry.answers.map(a => ({
+      answers: entry.answers.map((a: any) => ({
         prompt: a.prompt.text,
         category: a.prompt.category,
         tone: a.prompt.tone,
