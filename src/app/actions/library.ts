@@ -3,6 +3,7 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { trackEvent } from "@/services/telemetry"
 
 export async function getJournalEntries({
   q,
@@ -85,6 +86,10 @@ export async function getJournalEntryById(id: string) {
       }
     }
   })
+  
+  if (entry) {
+    await trackEvent(session.user.id, "journal_viewed", { entryId: id })
+  }
 
   return entry
 }

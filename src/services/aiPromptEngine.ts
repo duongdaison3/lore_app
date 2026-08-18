@@ -61,7 +61,8 @@ export async function generatePersonalizedPrompt(
   preferredTones: string[],
   longTermMemories: { type: string, content: string }[] = [],
   locale: string = 'vi',
-  recentPrompts: string[] = []
+  recentPrompts: string[] = [],
+  userId?: string
 ): Promise<AIPromptResult | null> {
   const apiKey = getRotatedApiKey();
   if (!apiKey) {
@@ -121,10 +122,34 @@ export async function generatePersonalizedPrompt(
       throw new Error("Validation or quality score failed");
     }
 
+    if (userId) {
+      import('./telemetry').then(({ trackAIEvent }) => {
+        trackAIEvent(userId, "ai_generation", {
+          success: true,
+          fallback: false,
+          latencyMs: latency,
+          model,
+          promptCategory: valid.category,
+          quality_score: valid.quality_score
+        }).catch(console.error);
+      });
+    }
+
     logAIOperation('generatePersonalizedPrompt', latency, true, model);
     return valid;
   } catch (error) {
     const latency = Date.now() - startTime;
+    if (userId) {
+      import('./telemetry').then(({ trackAIEvent }) => {
+        trackAIEvent(userId, "ai_generation", {
+          success: false,
+          fallback: true,
+          latencyMs: latency,
+          model,
+          error: String(error)
+        }).catch(console.error);
+      });
+    }
     logAIOperation('generatePersonalizedPrompt', latency, false, model, error);
     return null;
   }
@@ -133,7 +158,8 @@ export async function generatePersonalizedPrompt(
 export async function generateFollowUpPrompt(
   previousAnswer: string,
   userMood: string,
-  locale: string = 'vi'
+  locale: string = 'vi',
+  userId?: string
 ): Promise<AIPromptResult | null> {
   const apiKey = getRotatedApiKey();
   if (!apiKey) {
@@ -182,10 +208,31 @@ export async function generateFollowUpPrompt(
     const valid = validatePrompt(object);
     if (!valid || valid.quality_score < 70) throw new Error("Validation or quality score failed");
 
+    if (userId) {
+      import('./telemetry').then(({ trackAIEvent }) => {
+        trackAIEvent(userId, "ai_followup_generation", {
+          success: true,
+          latencyMs: latency,
+          model,
+          quality_score: valid.quality_score
+        }).catch(console.error);
+      });
+    }
+
     logAIOperation('generateFollowUpPrompt', latency, true, model);
     return valid;
   } catch (error) {
     const latency = Date.now() - startTime;
+    if (userId) {
+      import('./telemetry').then(({ trackAIEvent }) => {
+        trackAIEvent(userId, "ai_followup_generation", {
+          success: false,
+          latencyMs: latency,
+          model,
+          error: String(error)
+        }).catch(console.error);
+      });
+    }
     logAIOperation('generateFollowUpPrompt', latency, false, model, error);
     return null;
   }

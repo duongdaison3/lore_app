@@ -107,3 +107,17 @@ model Memory {
 
   @@index([userId, status])
 }
+
+model TelemetryEvent {
+  id         String   @id @default(cuid())
+  distinctId String   // Pseudonymous identifier (hashed userId)
+  name       String   // e.g., "journal_started", "ai_generation"
+  type       String   // "PRODUCT" or "AI"
+  metadata   Json     // Clean data (model, latency, prompt category). NO user content.
+  createdAt  DateTime @default(now())
+
+  @@index([distinctId])
+  @@index([name])
+  @@index([createdAt])
+}
+

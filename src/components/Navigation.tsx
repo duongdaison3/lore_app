@@ -28,8 +28,9 @@ export function Navigation({ isAuthenticated }: { isAuthenticated: boolean }) {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--border)]">
-      <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-6">
+    <div className="w-full flex justify-center pt-6 px-4 absolute top-0 z-50">
+      <header className="w-full max-w-3xl glass-panel rounded-full shadow-sm px-4 md:px-6">
+        <div className="flex h-14 items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image 
             src="/lore/Logo_without_background.png" 
@@ -92,5 +93,6 @@ export function Navigation({ isAuthenticated }: { isAuthenticated: boolean }) {
         </nav>
       </div>
     </header>
+    </div>
   )
 }

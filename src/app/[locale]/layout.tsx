@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Archivo, Space_Grotesk } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -9,15 +9,15 @@ import { Navigation } from '@/components/Navigation';
 import { auth } from '@/auth';
 import '../globals.css';
 
-const archivo = Archivo({ 
+const plusJakarta = Plus_Jakarta_Sans({ 
   subsets: ['latin', 'vietnamese'],
-  variable: '--font-archivo',
+  variable: '--font-heading',
   display: 'swap',
 });
 
-const spaceGrotesk = Space_Grotesk({
+const inter = Inter({
   subsets: ['latin', 'vietnamese'],
-  variable: '--font-space',
+  variable: '--font-sans',
   display: 'swap',
 });
 
@@ -52,8 +52,8 @@ export default async function LocaleLayout({
   const session = await auth();
 
   return (
-    <html lang={locale} className={`${archivo.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased">
+    <html lang={locale} className={`${plusJakarta.variable} ${inter.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased bg-background text-foreground bg-gradient-ambient selection:bg-primary/20">
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
@@ -61,9 +61,9 @@ export default async function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="min-h-screen flex flex-col bg-[var(--background)]">
+            <div className="min-h-screen flex flex-col">
               <Navigation isAuthenticated={!!session} />
-              <main className="flex-1 mx-auto w-full max-w-3xl px-6 py-8">
+              <main className="flex-1 mx-auto w-full max-w-3xl px-6 pt-28 pb-8 relative z-10">
                 {children}
               </main>
             </div>

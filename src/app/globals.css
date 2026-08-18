@@ -21,57 +21,66 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
+  --color-glass: var(--glass);
+  --color-glass-border: var(--glass-border);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --font-sans: var(--font-space), Arial, Helvetica, sans-serif;
-  --font-heading: var(--font-archivo), var(--font-space), sans-serif;
+  --font-sans: var(--font-sans), Arial, Helvetica, sans-serif;
+  --font-heading: var(--font-heading), var(--font-sans), sans-serif;
 }
 
 :root {
-  /* Warm Journal Brown & Ink Violet */
-  --background: #FFFBEB;
-  --foreground: #0F172A;
+  /* Premium Wellness Light Mode: Soft sand and warm tones */
+  --background: #FCFBF8;
+  --foreground: #1F1D1B;
 
   --card: #FFFFFF;
-  --card-foreground: #0F172A;
+  --card-foreground: #1F1D1B;
 
-  --muted: #F8F3F0;
-  --muted-foreground: #475569;
+  --muted: #F3F1EC;
+  --muted-foreground: #6B6863;
 
-  --border: #F1E8E2;
-  --input: #F1E8E2;
+  --border: #E8E4DB;
+  --input: #E8E4DB;
 
-  --primary: #92400E;
+  --primary: #945B45;
   --primary-foreground: #FFFFFF;
   
-  --accent: #6366F1;
-  --accent-foreground: #FFFFFF;
+  --accent: #D8A585;
+  --accent-foreground: #1F1D1B;
 
-  --radius: 12px;
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
+
+  --radius: 16px;
 }
 
 .dark {
-  /* Deep Ink & Muted Light */
-  --background: #0F172A;
-  --foreground: #FFFBEB;
+  /* Premium Elegant Dark Mode: Deep void with warm starlight accents */
+  --background: #0B0A09;
+  --foreground: #F5F3ED;
 
-  --card: #1E293B;
-  --card-foreground: #FFFBEB;
+  --card: #151312;
+  --card-foreground: #F5F3ED;
 
-  --muted: #1E293B;
-  --muted-foreground: #94A3B8;
+  --muted: #211E1D;
+  --muted-foreground: #A19B95;
 
-  --border: #334155;
-  --input: #334155;
+  --border: #2E2B29;
+  --input: #2E2B29;
 
-  --primary: #FFFBEB;
-  --primary-foreground: #92400E;
+  --primary: #D8A585;
+  --primary-foreground: #0B0A09;
   
-  --accent: #818CF8;
-  --accent-foreground: #0F172A;
+  --accent: #945B45;
+  --accent-foreground: #F5F3ED;
+
+  --glass: rgba(21, 19, 18, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -99,4 +108,29 @@ h1, h2, h3, h4, h5, h6 {
 
 .focus-ring:focus-visible {
   outline-color: var(--primary);
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Gradients */
+.bg-gradient-ambient {
+  background: radial-gradient(circle at top right, rgba(216, 165, 133, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at bottom left, rgba(148, 91, 69, 0.1) 0%, transparent 40%);
+}
+
+.dark .bg-gradient-ambient {
+  background: radial-gradient(circle at top right, rgba(216, 165, 133, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at bottom left, rgba(148, 91, 69, 0.05) 0%, transparent 50%);
+}
+
+/* Smooth text selection */
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }

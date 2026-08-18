@@ -69,7 +69,11 @@
     "processing": "Processing...",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
-    "logout": "Log out"
+    "logout": "Log out",
+    "agreeTerms": "I have read and agree to the",
+    "terms": "Terms of Service",
+    "and": "and",
+    "privacy": "Privacy Policy"
   },
   "Navigation": {
     "library": "Library",
@@ -143,5 +147,11 @@
     "cancel": "Cancel",
     "success": "Success",
     "error": "An error occurred"
+  },
+  "Legal": {
+    "termsTitle": "Terms of Service",
+    "termsDesc": "Please read these terms carefully before using Lore.",
+    "privacyTitle": "Privacy Policy",
+    "privacyDesc": "Committed to 100% protecting your privacy and data."
   }
 }

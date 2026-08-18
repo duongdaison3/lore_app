@@ -15,35 +15,37 @@ export default async function LorePage({ params }: { params: Promise<{ locale: s
       <div className="max-w-3xl mx-auto px-6 pt-24 space-y-32">
         
         {/* Header */}
-        <header className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          <h1 className="text-4xl sm:text-5xl font-serif text-[var(--foreground)] tracking-tight">
+        <header className="space-y-4 animate-in fade-in slide-in-from-bottom-6 duration-1000 text-center sm:text-left">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-[var(--foreground)] tracking-tight">
             {t("title")}
           </h1>
-          <p className="text-lg text-[var(--muted-foreground)] font-serif max-w-xl leading-relaxed">
+          <p className="text-lg md:text-xl text-[var(--muted-foreground)] font-sans max-w-xl leading-relaxed">
             {t("subtitle")}
           </p>
         </header>
 
         {/* On This Day */}
         {onThisDay.length > 0 && (
-          <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-150 fill-mode-both">
-            <h2 className="text-2xl font-serif text-[var(--foreground)]/80 border-b border-[var(--border)] pb-4">
+          <section className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-150 fill-mode-both">
+            <h2 className="text-2xl font-heading font-semibold text-[var(--foreground)] border-b border-[var(--border)]/50 pb-4">
               {t("onThisDay")}
             </h2>
             <div className="grid gap-8">
               {onThisDay.map((entry, idx) => (
-                <div key={idx} className="bg-[var(--card)] p-8 rounded-2xl shadow-sm border border-[var(--border)]/50 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-8 opacity-10 text-6xl pointer-events-none group-hover:scale-110 transition-transform duration-700">
+                <div key={idx} className="glass-panel p-8 md:p-10 rounded-3xl shadow-md relative overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                  <div className="absolute -top-4 -right-4 p-8 opacity-[0.03] text-8xl pointer-events-none group-hover:scale-110 group-hover:opacity-10 transition-all duration-700">
                     {entry.mood}
                   </div>
-                  <div className="space-y-6 relative z-10">
-                    <div className="text-sm font-medium tracking-widest text-[var(--muted-foreground)] uppercase">
-                      {entry.label} • {entry.localDate}
+                  <div className="space-y-8 relative z-10">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs font-bold tracking-widest uppercase">
+                      <span>{entry.label}</span>
+                      <span className="w-1 h-1 rounded-full bg-[var(--primary)]/50" />
+                      <span>{entry.localDate}</span>
                     </div>
                     {entry.answers.map((ans, aIdx) => (
-                      <div key={aIdx} className="space-y-2">
-                        <h3 className="text-lg font-serif text-[var(--foreground)]/90">{ans.promptText}</h3>
-                        <p className="text-[var(--muted-foreground)] leading-relaxed whitespace-pre-wrap">{ans.content}</p>
+                      <div key={aIdx} className="space-y-3">
+                        <h3 className="text-xl font-heading font-medium text-[var(--foreground)]">{ans.promptText}</h3>
+                        <p className="text-[var(--muted-foreground)] text-lg leading-relaxed whitespace-pre-wrap">{ans.content}</p>
                       </div>
                     ))}
                   </div>
@@ -54,25 +56,25 @@ export default async function LorePage({ params }: { params: Promise<{ locale: s
         )}
 
         {/* Monthly Lore */}
-        <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 fill-mode-both">
-          <h2 className="text-2xl font-serif text-[var(--foreground)]/80 border-b border-[var(--border)] pb-4">
+        <section className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300 fill-mode-both">
+          <h2 className="text-2xl font-heading font-semibold text-[var(--foreground)] border-b border-[var(--border)]/50 pb-4">
             {t("monthlyLore")}
           </h2>
-          <div className="grid sm:grid-cols-2 gap-8">
-            <div className="bg-[var(--accent)]/5 rounded-2xl p-8 space-y-6">
-              <h3 className="font-serif text-xl text-[var(--foreground)]">{t("theFacts")}</h3>
-              <ul className="space-y-4 text-[var(--muted-foreground)]">
-                <li className="flex justify-between">
-                  <span>{t("entriesWritten")}</span>
-                  <span className="font-medium text-[var(--foreground)]">{monthlyLore.facts.totalEntries}</span>
+          <div className="grid sm:grid-cols-5 gap-6">
+            <div className="sm:col-span-2 glass-panel rounded-3xl p-8 space-y-6 shadow-sm border-[var(--border)]/30">
+              <h3 className="font-heading font-medium text-xl text-[var(--foreground)]">{t("theFacts")}</h3>
+              <ul className="space-y-5 text-[var(--muted-foreground)]">
+                <li className="flex justify-between items-center">
+                  <span className="text-sm uppercase tracking-wider">{t("entriesWritten")}</span>
+                  <span className="font-heading font-semibold text-2xl text-[var(--foreground)]">{monthlyLore.facts.totalEntries}</span>
                 </li>
-                <li className="flex justify-between">
-                  <span>{t("activeDays")}</span>
-                  <span className="font-medium text-[var(--foreground)]">{monthlyLore.facts.activeDays}</span>
+                <li className="flex justify-between items-center">
+                  <span className="text-sm uppercase tracking-wider">{t("activeDays")}</span>
+                  <span className="font-heading font-semibold text-2xl text-[var(--foreground)]">{monthlyLore.facts.activeDays}</span>
                 </li>
-                <li className="space-y-2 pt-2">
-                  <span className="block">{t("topMoods")}</span>
-                  <div className="flex gap-2 text-2xl">
+                <li className="space-y-3 pt-2">
+                  <span className="block text-sm uppercase tracking-wider">{t("topMoods")}</span>
+                  <div className="flex gap-3 text-3xl">
                     {monthlyLore.facts.moodDistribution.slice(0, 3).map(m => m.mood).join(" ")}
                   </div>
                 </li>
@@ -80,24 +82,26 @@ export default async function LorePage({ params }: { params: Promise<{ locale: s
             </div>
             
             {monthlyLore.reflection && (
-              <div className="bg-[var(--foreground)] text-[var(--background)] rounded-2xl p-8 space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-6 opacity-20">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3v18M3 12h18"/></svg>
+              <div className="sm:col-span-3 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[var(--primary-foreground)] rounded-3xl p-8 shadow-lg relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3v18M3 12h18"/></svg>
                 </div>
-                <h3 className="font-serif text-xl opacity-90 flex items-center gap-2">
-                  {t("aiReflection")}
-                </h3>
-                <p className="font-serif text-lg leading-relaxed opacity-90">
-                  {monthlyLore.reflection}
-                </p>
+                <div className="relative z-10 space-y-6">
+                  <h3 className="font-heading font-semibold text-xl tracking-wide flex items-center gap-2">
+                    {t("aiReflection")}
+                  </h3>
+                  <p className="font-sans text-lg md:text-xl leading-relaxed text-[var(--primary-foreground)]/90">
+                    {monthlyLore.reflection}
+                  </p>
+                </div>
               </div>
             )}
           </div>
         </section>
 
         {/* Memory Highlights */}
-        <section className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500 fill-mode-both">
-          <h2 className="text-2xl font-serif text-[var(--foreground)]/80 border-b border-[var(--border)] pb-4">
+        <section className="space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-500 fill-mode-both">
+          <h2 className="text-2xl font-heading font-semibold text-[var(--foreground)] border-b border-[var(--border)]/50 pb-4">
             {t("highlights")}
           </h2>
           
@@ -118,12 +122,15 @@ export default async function LorePage({ params }: { params: Promise<{ locale: s
 function MemoryGroup({ title, memories }: { title: string, memories: any[] }) {
   if (memories.length === 0) return null;
   return (
-    <div className="space-y-4">
-      <h3 className="font-serif text-xl text-[var(--foreground)]/80">{title}</h3>
+    <div className="space-y-5">
+      <h3 className="font-heading font-medium text-lg tracking-wide text-[var(--foreground)]/90 flex items-center gap-3">
+        <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
+        {title}
+      </h3>
       <ul className="space-y-3">
         {memories.map(m => (
-          <li key={m.id} className="group flex items-start gap-3 p-3 -ml-3 rounded-lg hover:bg-[var(--accent)]/5 transition-colors">
-            <span className="flex-1 text-[var(--muted-foreground)] leading-relaxed">
+          <li key={m.id} className="group flex items-start gap-3 p-4 rounded-2xl glass-panel hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <span className="flex-1 text-[var(--muted-foreground)] leading-relaxed group-hover:text-[var(--foreground)] transition-colors">
               {m.content}
             </span>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity">

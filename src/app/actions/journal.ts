@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { trackEvent } from "@/services/telemetry"
 
 // 1. Get today's local date string
 function getLocalDateString(timezoneOffset: number) {
@@ -33,6 +34,8 @@ export async function saveMood(mood: string, timezoneOffset: number) {
       mood,
     },
   })
+
+  await trackEvent(session.user.id, "mood_selected", { mood })
 
   return { entryId: entry.id }
 }
@@ -89,7 +92,8 @@ export async function getPrompts() {
     candidates,
     currentDate: new Date(),
     activeMemories: user?.memories || [],
-    locale: "vi"
+    locale: "vi",
+    userId: session.user.id
   }) || candidates[0];
 
   // We don't generate followUp upfront anymore. We return null.
@@ -110,7 +114,7 @@ export async function generateContextualFollowUp(answer: string, locale: string 
 
   const { generateFollowUpPrompt } = await import('@/services/aiPromptEngine')
   
-  const aiFollowUp = await generateFollowUpPrompt(answer, currentMood, locale);
+  const aiFollowUp = await generateFollowUpPrompt(answer, currentMood, locale, session.user.id);
   
   if (aiFollowUp) {
     // We need to return it in the Prompt interface shape so frontend can use it
@@ -126,10 +130,15 @@ export async function generateContextualFollowUp(answer: string, locale: string 
     }
   }
 
-  // Fallback
-  return await prisma.prompt.findFirst({
+  const fallback = await prisma.prompt.findFirst({
     where: { isFollowUp: true, active: true }
   })
+  
+  if (fallback) {
+    await trackEvent(session.user.id, "followup_offered", { promptId: fallback.id })
+  }
+
+  return fallback
 }
 
 export async function saveDraft(entryId: string, promptId: string, content: string) {
@@ -166,6 +175,8 @@ export async function saveDraft(entryId: string, promptId: string, content: stri
     },
   })
   
+  await trackEvent(session.user.id, "draft_saved", { promptId })
+
   return { success: true }
 }
 
@@ -213,5 +224,27 @@ export async function completeEntry(entryId: string) {
     })
   }
 
+  await trackEvent(session.user.id, "journal_completed", { entryId })
+
   return { success: true }
 }
+
+export async function trackFrontendEvent(eventName: string, metadata: Record<string, any> = {}) {
+  const session = await auth()
+  if (!session?.user?.id) return // Fail silently for tracking
+
+  // Allow list of frontend events to prevent abuse
+  const allowedEvents = [
+    "journal_started",
+    "prompt_viewed",
+    "prompt_changed",
+    "answer_started",
+    "followup_accepted",
+    "followup_completed"
+  ]
+  
+  if (allowedEvents.includes(eventName)) {
+    await trackEvent(session.user.id, eventName, metadata)
+  }
+}
+

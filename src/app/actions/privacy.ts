@@ -3,6 +3,7 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { trackEvent } from "@/services/telemetry"
 
 export async function deleteMemory(memoryId: string) {
   const session = await auth()
@@ -20,6 +21,8 @@ export async function deleteMemory(memoryId: string) {
   await prisma.memory.delete({
     where: { id: memoryId }
   })
+  
+  await trackEvent(session.user.id, "memory_deleted", { type: memory.type })
 
   revalidatePath('/[locale]/settings', 'page')
   return { success: true }
@@ -45,6 +48,10 @@ export async function togglePersonalization(enabled: boolean) {
     where: { id: session.user.id },
     data: { personalizationEnabled: enabled }
   })
+  
+  if (!enabled) {
+    await trackEvent(session.user.id, "personalization_disabled")
+  }
 
   revalidatePath('/[locale]/settings', 'page')
   return { success: true }

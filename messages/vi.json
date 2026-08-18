@@ -69,7 +69,11 @@
     "processing": "Đang xử lý...",
     "noAccount": "Chưa có tài khoản?",
     "haveAccount": "Đã có tài khoản?",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "agreeTerms": "Tôi đã đọc và đồng ý với",
+    "terms": "Điều khoản Dịch vụ",
+    "and": "và",
+    "privacy": "Chính sách Bảo mật"
   },
   "Navigation": {
     "library": "Thư viện",
@@ -143,5 +147,11 @@
     "cancel": "Hủy",
     "success": "Thành công",
     "error": "Có lỗi xảy ra"
+  },
+  "Legal": {
+    "termsTitle": "Điều khoản Dịch vụ",
+    "termsDesc": "Vui lòng đọc kỹ các điều khoản trước khi sử dụng Lore.",
+    "privacyTitle": "Chính sách Bảo mật",
+    "privacyDesc": "Cam kết bảo vệ 100% quyền riêng tư và dữ liệu của bạn."
   }
 }

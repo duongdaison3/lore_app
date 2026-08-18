@@ -4,16 +4,9 @@ import { LibraryFilters } from "@/components/library/LibraryFilters"
 import { EmptyState } from "@/components/ui/EmptyState"
 import { getTranslations } from "next-intl/server"
 
-interface LibraryPageProps {
-  searchParams: {
-    q?: string
-    mood?: string
-    date?: string
-  }
-}
-
-export default async function LibraryPage({ searchParams }: LibraryPageProps) {
+export default async function LibraryPage({ searchParams: searchParamsPromise }: { searchParams: Promise<{ q?: string, mood?: string, date?: string }> }) {
   const t = await getTranslations("Library")
+  const searchParams = await searchParamsPromise;
   
   const { entries, total } = await getJournalEntries({
     q: searchParams.q,
@@ -22,8 +15,8 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
   })
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <h1 className="text-4xl font-bold mb-8">{t("libraryTitle")}</h1>
+    <div className="max-w-5xl mx-auto py-8 px-4 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      <h1 className="text-4xl md:text-5xl font-heading font-bold mb-10 tracking-tight text-[var(--foreground)] text-center sm:text-left">{t("libraryTitle")}</h1>
       
       <LibraryFilters />
 

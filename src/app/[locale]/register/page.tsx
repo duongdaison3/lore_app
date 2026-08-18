@@ -37,16 +37,13 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="relative flex min-h-[80vh] items-center justify-center p-4 overflow-hidden">
-      {/* Artistic glowing orbs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg aspect-square bg-[var(--accent)]/5 rounded-full blur-[100px] pointer-events-none" />
-      
-      <Card className="relative z-10 w-full max-w-md animate-in fade-in zoom-in-95 duration-500 shadow-xl border-[var(--border)]/50 bg-[var(--card)]/90 backdrop-blur-md rounded-2xl">
-        <CardHeader className="text-center space-y-2 pb-6">
-          <CardTitle className="text-3xl font-heading tracking-tight">{t("register")}</CardTitle>
+    <div className="relative flex min-h-[75vh] items-center justify-center p-4 overflow-hidden my-8">
+      <div className="glass-panel w-full max-w-lg animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-xl rounded-3xl p-8 md:p-10 relative z-10">
+        <div className="text-center space-y-3 pb-8">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold tracking-tight text-[var(--foreground)]">{t("register")}</h1>
           <p className="text-base text-[var(--muted-foreground)] font-sans">{t("registerWelcome")}</p>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-2">
@@ -74,18 +71,32 @@ export default function RegisterPage() {
               <label className="text-sm font-medium">{t("confirmPassword")}</label>
               <Input type="password" name="confirmPassword" required placeholder="••••••••" />
             </div>
-            <Button type="submit" className="w-full rounded-full" disabled={loading}>
+            
+            <div className="flex items-start gap-3 pt-2">
+              <input 
+                type="checkbox" 
+                id="agreeTerms" 
+                name="agreeTerms" 
+                required 
+                className="mt-1 w-4 h-4 rounded border-[var(--border)] text-[var(--primary)] focus:ring-[var(--primary)] accent-[var(--primary)]"
+              />
+              <label htmlFor="agreeTerms" className="text-sm text-[var(--muted-foreground)] leading-tight">
+                {t("agreeTerms")} <Link href={`/${locale}/terms`} className="text-[var(--primary)] hover:underline" target="_blank">{t("terms")}</Link> {t("and")} <Link href={`/${locale}/privacy-policy`} className="text-[var(--primary)] hover:underline" target="_blank">{t("privacy")}</Link>.
+              </label>
+            </div>
+
+            <Button type="submit" className="w-full rounded-full h-12 text-base font-medium mt-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all bg-[var(--primary)] text-[var(--primary-foreground)]" disabled={loading}>
               {loading ? t("processing") : t("register")}
             </Button>
-            <div className="text-center text-sm pt-4">
+            <div className="text-center text-sm pt-6">
               {t("haveAccount")}{" "}
-              <Link href={`/${locale}/login`} className="text-[var(--primary)] hover:underline">
+              <Link href={`/${locale}/login`} className="text-[var(--primary)] hover:text-[var(--accent)] font-medium hover:underline transition-colors">
                 {t("login")}
               </Link>
             </div>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
