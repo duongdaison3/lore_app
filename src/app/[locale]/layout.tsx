@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans, Fira_Code, Fira_Sans } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -18,6 +18,19 @@ const plusJakarta = Plus_Jakarta_Sans({
 const inter = Inter({
   subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
+  display: 'swap',
+});
+
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+const firaSans = Fira_Sans({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-admin',
   display: 'swap',
 });
 
@@ -52,7 +65,7 @@ export default async function LocaleLayout({
   const session = await auth();
 
   return (
-    <html lang={locale} className={`${plusJakarta.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`${plusJakarta.variable} ${inter.variable} ${firaCode.variable} ${firaSans.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased bg-background text-foreground bg-gradient-ambient selection:bg-primary/20">
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider

@@ -66,80 +66,76 @@ export default async function AnalyticsDashboardPage() {
   const followupRate = followupOffered > 0 ? ((followupAccepted / followupOffered) * 100).toFixed(1) : "0"
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-8">
-      <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div>
+        <h1 className="text-3xl font-bold font-heading text-white tracking-tight">Developer Analytics</h1>
+        <p className="text-slate-400 mt-2">Privacy-conscious observability without exposing raw user content.</p>
+        </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* USER RETENTION */}
+        <div className="bg-[#1E293B]/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700/50 shadow-xl">
+          <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">Active Users</h3>
+          <p className="text-4xl font-light text-white mt-4 font-mono">{totalUsers}</p>
+          <p className="text-xs text-slate-500 mt-2">Distinct IDs stored (Pseudonymous)</p>
+        </div>
+
+        <div className="bg-[#1E293B]/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700/50 shadow-xl">
+          <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">Completion Rate</h3>
+          <p className="text-4xl font-light text-white mt-4 font-mono">{completionRate}%</p>
+          <p className="text-xs text-slate-500 mt-2">{journalCompleted} completed / {journalStarted} started</p>
+        </div>
         
-        <div>
-          <h1 className="text-3xl font-serif text-[var(--foreground)] tracking-tight">Developer Analytics</h1>
-          <p className="text-[var(--muted-foreground)] mt-2">Privacy-conscious observability without exposing raw user content.</p>
+        <div className="bg-[#1E293B]/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700/50 shadow-xl">
+          <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">Prompt Reroll Rate</h3>
+          <p className="text-4xl font-light text-emerald-400 mt-4 font-mono">{rerollRate}%</p>
+          <p className="text-xs text-slate-500 mt-2">{promptChanged} rerolled / {promptViewed} viewed</p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* USER RETENTION */}
-          <div className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--border)]">
-            <h3 className="text-sm font-medium text-[var(--muted-foreground)] uppercase tracking-wider">Active Users</h3>
-            <p className="text-4xl font-light text-[var(--foreground)] mt-4">{totalUsers}</p>
-            <p className="text-xs text-[var(--muted-foreground)] mt-2">Distinct IDs stored (Pseudonymous)</p>
-          </div>
-
-          <div className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--border)]">
-            <h3 className="text-sm font-medium text-[var(--muted-foreground)] uppercase tracking-wider">Completion Rate</h3>
-            <p className="text-4xl font-light text-[var(--foreground)] mt-4">{completionRate}%</p>
-            <p className="text-xs text-[var(--muted-foreground)] mt-2">{journalCompleted} completed / {journalStarted} started</p>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* AI HEALTH */}
+        <div className="bg-[#1E293B]/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700/50 shadow-xl">
+          <h3 className="text-sm font-medium text-slate-200 border-b border-slate-700/50 pb-4 mb-4">AI Engine Health</h3>
           
-          <div className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--border)]">
-            <h3 className="text-sm font-medium text-[var(--muted-foreground)] uppercase tracking-wider">Prompt Reroll Rate</h3>
-            <p className="text-4xl font-light text-[var(--foreground)] mt-4">{rerollRate}%</p>
-            <p className="text-xs text-[var(--muted-foreground)] mt-2">{promptChanged} rerolled / {promptViewed} viewed</p>
+          <div className="space-y-4 font-mono text-sm">
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Generation Success Rate</span>
+              <span className="font-medium text-emerald-400">{aiSuccessRate}%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Fallback Frequency</span>
+              <span className="font-medium text-white">{aiFallbackCount} times</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Average Latency</span>
+              <span className="font-medium text-white">{avgLatency} ms</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Follow-up Acceptance</span>
+              <span className="font-medium text-white">{followupRate}%</span>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* AI HEALTH */}
-          <div className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--border)]">
-            <h3 className="text-sm font-medium text-[var(--foreground)] border-b border-[var(--border)] pb-4 mb-4">AI Engine Health</h3>
-            
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-[var(--muted-foreground)]">Generation Success Rate</span>
-                <span className="font-medium text-[var(--foreground)]">{aiSuccessRate}%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-[var(--muted-foreground)]">Fallback Frequency</span>
-                <span className="font-medium text-[var(--foreground)]">{aiFallbackCount} times</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-[var(--muted-foreground)]">Average Latency</span>
-                <span className="font-medium text-[var(--foreground)]">{avgLatency} ms</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-[var(--muted-foreground)]">Follow-up Acceptance</span>
-                <span className="font-medium text-[var(--foreground)]">{followupRate}%</span>
-              </div>
-            </div>
-          </div>
-
-          {/* EVENT LOG */}
-          <div className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--border)]">
-            <h3 className="text-sm font-medium text-[var(--foreground)] border-b border-[var(--border)] pb-4 mb-4">Recent Events Log</h3>
-            
-            <div className="space-y-3 h-64 overflow-y-auto pr-2">
-              {[...productEvents, ...aiEvents].sort((a: any, b: any) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 50).map((e: any) => (
-                <div key={e.id} className="text-sm flex flex-col p-2 bg-[var(--background)] rounded-md">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium text-[var(--foreground)]">{e.name}</span>
-                    <span className="text-xs text-[var(--muted-foreground)]">{e.createdAt.toLocaleTimeString()}</span>
-                  </div>
-                  <span className="text-xs text-[var(--muted-foreground)] font-mono mt-1 break-all">
-                    {JSON.stringify(e.metadata)}
-                  </span>
+        {/* EVENT LOG */}
+        <div className="bg-[#1E293B]/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700/50 shadow-xl">
+          <h3 className="text-sm font-medium text-slate-200 border-b border-slate-700/50 pb-4 mb-4">Recent Events Log</h3>
+          
+          <div className="space-y-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
+            {[...productEvents, ...aiEvents].sort((a: any, b: any) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 50).map((e: any) => (
+              <div key={e.id} className="text-sm flex flex-col p-3 bg-[#0F172A]/80 rounded-md border border-slate-700/30">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-emerald-400">{e.name}</span>
+                  <span className="text-xs text-slate-500">{e.createdAt.toLocaleTimeString()}</span>
                 </div>
-              ))}
-            </div>
+                <span className="text-xs text-slate-400 font-mono mt-2 break-all bg-slate-900/50 p-2 rounded">
+                  {JSON.stringify(e.metadata)}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-
       </div>
     </div>
   )
