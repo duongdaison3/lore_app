@@ -7,7 +7,6 @@ import { redirect } from "next/navigation"
 export default async function LorePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations("Lore")
-  const t = await getTranslations("Lore")
 
   const session = await auth()
   if (!session?.user?.id) {
