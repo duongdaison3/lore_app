@@ -81,15 +81,15 @@ export function PrivacyCenter({
   }
 
   return (
-    <section className="space-y-6 pt-16 border-t border-[var(--border)]">
+    <section className="space-y-6 pt-16">
       <div className="space-y-2">
-        <h2 className="text-2xl font-serif text-[var(--foreground)]">{t("title")}</h2>
+        <h2 className="text-2xl font-heading font-semibold text-[var(--foreground)]/80 border-b border-[var(--border)]/50 pb-4">{t("title")}</h2>
         <p className="text-[var(--muted-foreground)] leading-relaxed">
           {t("description")}
         </p>
       </div>
 
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-8">
+      <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-8 shadow-sm">
         
         {/* Personalization Toggle */}
         <div className="flex items-center justify-between pb-6 border-b border-[var(--border)]">
@@ -129,14 +129,14 @@ export function PrivacyCenter({
           ) : (
             <ul className="space-y-3">
               {memories.map(m => (
-                <li key={m.id} className="flex justify-between items-start gap-4 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] group">
-                  <div className="space-y-1">
-                    <p className="text-[var(--foreground)] leading-relaxed">{m.content}</p>
-                    <div className="text-xs text-[var(--muted-foreground)] flex items-center gap-2">
-                      <span>{getConfidenceText(m.confidence)}</span>
+                <li key={m.id} className="flex justify-between items-start gap-4 p-5 rounded-2xl bg-[var(--background)]/40 border border-[var(--border)]/30 group hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div className="space-y-2">
+                    <p className="text-[var(--foreground)] leading-relaxed text-base">{m.content}</p>
+                    <div className="text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)] flex items-center gap-2">
+                      <span className="text-[var(--primary)]">{getConfidenceText(m.confidence)}</span>
                       {m.sourceEntry && (
                         <>
-                          <span>•</span>
+                          <span className="w-1 h-1 rounded-full bg-[var(--muted-foreground)]/50" />
                           <span>{t("sourceDate", { date: m.sourceEntry.localDate })}</span>
                         </>
                       )}

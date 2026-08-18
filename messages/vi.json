@@ -86,6 +86,9 @@
   },
   "Home": {
     "morning": "Chào buổi sáng,",
+    "afternoon": "Chào buổi chiều,",
+    "evening": "Chào buổi tối,",
+    "night": "Chào buổi đêm,",
     "howAreYou": "Hôm nay bạn cảm thấy thế nào?",
     "welcomeTitle": "Một cuộc trò chuyện nhỏ mỗi ngày với chính bạn.",
     "welcomeDesc": "Ghi chép lại những suy nghĩ, cảm xúc và kỉ niệm. Nhận những câu hỏi gợi mở từ AI để hiểu rõ bản thân hơn.",
@@ -153,5 +156,16 @@
     "termsDesc": "Vui lòng đọc kỹ các điều khoản trước khi sử dụng Lore.",
     "privacyTitle": "Chính sách Bảo mật",
     "privacyDesc": "Cam kết bảo vệ 100% quyền riêng tư và dữ liệu của bạn."
+  },
+  "Profile": {
+    "title": "Hồ sơ của bạn",
+    "displayName": "Tên hiển thị",
+    "displayNamePlaceholder": "Nhập tên bạn muốn hiển thị",
+    "bio": "Giới thiệu bản thân (Bio)",
+    "bioPlaceholder": "Vài dòng về bản thân hoặc câu nói yêu thích...",
+    "updateBtn": "Cập nhật Hồ sơ",
+    "updating": "Đang cập nhật...",
+    "updateSuccess": "Đã cập nhật hồ sơ",
+    "updateError": "Lỗi khi cập nhật hồ sơ"
   }
 }

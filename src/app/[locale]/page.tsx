@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { Button } from "@/components/ui/Button";
 import { getTranslations, getLocale } from "next-intl/server";
+import { DynamicGreeting } from "@/components/ui/DynamicGreeting";
 import { auth } from '@/auth';
 
 export default async function Home() {
@@ -60,9 +61,7 @@ export default async function Home() {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 space-y-12 flex flex-col items-center pt-20 min-h-[75vh]">
       <div className="space-y-4 text-center w-full max-w-2xl">
-        <h1 className="text-3xl md:text-4xl font-heading font-semibold tracking-tight text-[var(--foreground)]">
-          {th("morning")} <span className="text-[var(--primary)]">{session.user?.name || session.user?.email?.split('@')[0]}</span>
-        </h1>
+        <DynamicGreeting name={session.user?.name || session.user?.email?.split('@')[0] || ""} />
         <p className="text-lg md:text-xl text-[var(--muted-foreground)] font-light">{th("howAreYou")}</p>
       </div>
 

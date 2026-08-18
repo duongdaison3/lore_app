@@ -42,14 +42,14 @@ export function SettingsForm({ initialPrefs }: { initialPrefs: Prefs }) {
   return (
     <div className="space-y-12">
       <section className="space-y-6">
-        <div className="space-y-2">
-          <h2 className="text-2xl font-serif text-[var(--foreground)]">{t("notifications")}</h2>
-          <p className="text-[var(--muted-foreground)] leading-relaxed">
-            {t("notificationsDesc")}
-          </p>
-        </div>
+        <h2 className="text-2xl font-heading font-semibold text-[var(--foreground)]/80 border-b border-[var(--border)]/50 pb-4">
+          {t("notifications")}
+        </h2>
+        <p className="text-[var(--muted-foreground)] leading-relaxed">
+          {t("notificationsDesc")}
+        </p>
 
-        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-6">
+        <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-8 shadow-sm">
           
           <div className="flex items-center justify-between">
             <div className="space-y-1">
@@ -86,8 +86,8 @@ export function SettingsForm({ initialPrefs }: { initialPrefs: Prefs }) {
         </div>
       </section>
 
-      <div className="pt-6 border-t border-[var(--border)] flex justify-end">
-        <Button onClick={handleSave} disabled={isPending} className="rounded-full px-8">
+      <div className="pt-8 flex justify-end">
+        <Button onClick={handleSave} disabled={isPending} className="rounded-full px-10 h-12 shadow-sm hover:shadow-md transition-all font-medium bg-[var(--primary)] text-[var(--primary-foreground)]">
           {isPending ? t("saving") : t("save")}
         </Button>
       </div>

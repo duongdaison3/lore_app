@@ -12,6 +12,8 @@ model User {
   email                  String   @unique
   phone                  String?
   name                   String?
+  bio                    String?
+  avatarUrl              String?
   passwordHash           String
   preferredTones         String[] @default([])
   personalizationEnabled Boolean  @default(true)

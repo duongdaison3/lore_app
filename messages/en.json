@@ -86,6 +86,9 @@
   },
   "Home": {
     "morning": "Good morning,",
+    "afternoon": "Good afternoon,",
+    "evening": "Good evening,",
+    "night": "Good night,",
     "howAreYou": "How are you feeling today?",
     "welcomeTitle": "A tiny daily conversation with yourself.",
     "welcomeDesc": "Record your thoughts, feelings, and memories. Receive prompt questions from AI to understand yourself better.",
@@ -153,5 +156,16 @@
     "termsDesc": "Please read these terms carefully before using Lore.",
     "privacyTitle": "Privacy Policy",
     "privacyDesc": "Committed to 100% protecting your privacy and data."
+  },
+  "Profile": {
+    "title": "Your Profile",
+    "displayName": "Display Name",
+    "displayNamePlaceholder": "Enter your display name",
+    "bio": "Bio",
+    "bioPlaceholder": "A little about yourself or your favorite quote...",
+    "updateBtn": "Update Profile",
+    "updating": "Updating...",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Error updating profile"
   }
 }

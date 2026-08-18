@@ -3,13 +3,14 @@ import { EntryDetailView } from "@/components/library/EntryDetailView"
 import { notFound } from "next/navigation"
 
 interface EntryPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function EntryPage({ params }: EntryPageProps) {
-  const entry = await getJournalEntryById(params.id)
+  const resolvedParams = await params
+  const entry = await getJournalEntryById(resolvedParams.id)
 
   if (!entry) {
     notFound()
