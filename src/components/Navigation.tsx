@@ -57,6 +57,9 @@ export function Navigation({ isAuthenticated }: { isAuthenticated: boolean }) {
               <Link href={`/${locale}/library`} className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors px-2">
                 {tNav("library")}
               </Link>
+              <Link href={`/${locale}/lore`} className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors px-2">
+                {tNav("lore")}
+              </Link>
               <form action={logoutAction}>
                 <button type="submit" className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors px-2">
                   {tAuth("logout")}

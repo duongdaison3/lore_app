@@ -15,7 +15,7 @@ function getRotatedApiKey(): string | null {
 const memoryExtractionSchema = z.object({
   extracted_memories: z.array(z.object({
     id: z.string().optional(), // existing memory ID if updating
-    type: z.enum(['person', 'preference', 'goal', 'recurring_theme', 'important_event', 'writing_preference']),
+    type: z.enum(['person', 'preference', 'goal', 'recurring_theme', 'important_event', 'writing_preference', 'tiny_win', 'plot_twist']),
     content: z.string(),
     confidence: z.number().min(0).max(1),
     isNew: z.boolean(),
@@ -56,7 +56,7 @@ export async function processJournalEntryForMemories(userId: string, entryId: st
         You will receive the user's new journal entry wrapped in <journal_entry> tags, along with a list of their EXISTING memories.
         
         TASK:
-        1. Identify any NEW recurring themes, people, or preferences in the entry. Return them with isNew=true and an initial confidence of 0.4.
+        1. Identify any NEW recurring themes, people, preferences, tiny wins (small daily victories), or plot twists (unexpected turns of events) in the entry. Return them with isNew=true and an initial confidence of 0.4.
         2. Identify if the entry CORROBORATES any EXISTING memories. If so, return the existing memory (include its ID) with isNew=false and INCREASE its confidence by 0.3 (max 1.0).
         3. Do NOT return existing memories that are NOT corroborated by this new entry.
         

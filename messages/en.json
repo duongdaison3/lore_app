@@ -73,6 +73,7 @@
   },
   "Navigation": {
     "library": "Library",
+    "lore": "Your Lore",
     "settings": "Settings"
   },
   "Theme": {
@@ -83,8 +84,27 @@
     "morning": "Good morning,",
     "howAreYou": "How are you feeling today?",
     "welcomeTitle": "A tiny daily conversation with yourself.",
-    "welcomeDesc": "Capture your thoughts, emotions, and memories. Receive thoughtful AI prompts to understand yourself better.",
+    "welcomeDesc": "Record your thoughts, feelings, and memories. Receive prompt questions from AI to understand yourself better.",
     "loginBtn": "Log in",
-    "registerBtn": "Get started"
+    "registerBtn": "Start now"
+  },
+  "Lore": {
+    "title": "Your Lore",
+    "subtitle": "Rediscover the small pieces that make up your own story.",
+    "onThisDay": "On This Day",
+    "monthlyLore": "Monthly Lore",
+    "theFacts": "The Facts",
+    "entriesWritten": "Entries written",
+    "activeDays": "Active days",
+    "topMoods": "Top moods",
+    "aiReflection": "AI Reflection",
+    "highlights": "Memory Highlights",
+    "tinyWins": "Tiny Wins",
+    "plotTwists": "Plot Twists",
+    "themes": "Recurring Themes",
+    "people": "Frequently mentioned people",
+    "milestones": "Personal Milestones",
+    "hideTitle": "Hide from Lore",
+    "hiddenSuccess": "Memory hidden successfully."
   }
 }

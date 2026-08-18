@@ -15,8 +15,8 @@ export interface UserPreferences {
 export interface PromptEngineContext {
   currentMood: string;
   userPreferences: UserPreferences;
-  // History of prompt IDs shown to this user, along with the date shown
-  recentPrompts: { promptId: string; date: Date }[];
+  // History of prompt IDs shown to this user, along with the date shown and the actual generated text
+  recentPrompts: { promptId: string; date: Date; text?: string }[];
   // Candidate prompts from the database
   candidates: Prompt[];
   currentDate: Date;
@@ -82,6 +82,15 @@ export async function getDailyPrompt(context: PromptEngineContext): Promise<Prom
         // Negative penalty that decays over time
         score -= (30 - Math.min(daysSinceSeen, 30));
       }
+    } else {
+      // Freshness bonus: rewards prompts not seen in a long time (or never seen)
+      const lastSeen = recentPrompts.find((rp) => rp.promptId === prompt.id);
+      if (lastSeen) {
+        const daysSinceSeen = (currentDate.getTime() - lastSeen.date.getTime()) / DAY_IN_MS;
+        score += Math.min(daysSinceSeen * 0.5, 15); // Max 15 points for freshness
+      } else {
+        score += 20; // 20 points for completely fresh prompts
+      }
     }
 
     return { prompt, score };
@@ -95,12 +104,15 @@ export async function getDailyPrompt(context: PromptEngineContext): Promise<Prom
   // 4. Augment with AI if possible (fallback to candidate if AI fails)
   try {
     const { generatePersonalizedPrompt } = await import('./aiPromptEngine');
+    const recentTexts = context.recentPrompts.map(rp => rp.text).filter((t): t is string => !!t);
+
     const aiResult = await generatePersonalizedPrompt(
       bestCandidate.text,
       currentMood,
       userPreferences.preferredTones,
       context.activeMemories || [],
-      context.locale || 'vi'
+      context.locale || 'vi',
+      recentTexts
     );
 
     if (aiResult) {

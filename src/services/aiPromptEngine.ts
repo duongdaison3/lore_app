@@ -8,6 +8,8 @@ export const promptSchema = z.object({
   category: z.string(),
   tone: z.string(),
   intensity: z.number().min(1).max(10),
+  quality_score: z.number().min(0).max(100).describe("Score 0-100 based on natural Vietnamese, originality, specificity, and novelty"),
+  structural_pattern: z.string().describe("e.g., 'If today were...', 'What surprised you...', 'Complete this sentence...'"),
   follow_up_prompt: z.string().nullable().optional()
 });
 
@@ -58,7 +60,8 @@ export async function generatePersonalizedPrompt(
   userMood: string, 
   preferredTones: string[],
   longTermMemories: { type: string, content: string }[] = [],
-  locale: string = 'vi'
+  locale: string = 'vi',
+  recentPrompts: string[] = []
 ): Promise<AIPromptResult | null> {
   const apiKey = getRotatedApiKey();
   if (!apiKey) {
@@ -88,24 +91,35 @@ export async function generatePersonalizedPrompt(
         - Respect the user's preferred tones if possible.
         - Do NOT diagnose, judge, or use manipulative emotional language.
         
+        CRITICAL: SEMANTIC AND STRUCTURAL DIVERSITY
+        - Evaluate your generated prompt on originality, natural Vietnamese, specificity, and novelty. Set quality_score 0-100.
+        - You MUST avoid using repetitive AI phrasing like "Hãy...", "Bạn có bao giờ...", "Điều gì khiến...", "Bạn cảm thấy thế nào...".
+        - You MUST provide structural variety. Do not repeat the semantic intent or the exact structure of the recent prompts provided.
+        - Define your structural_pattern (e.g., "Imagine...", "Choose one...", "Complete this sentence...").
+
         You have access to the user's LONG-TERM MEMORIES. Use these to make the prompt feel highly personal, but only if they naturally fit the context. Do NOT forcefully inject memories if they are irrelevant to the current candidate prompt or mood.
       `,
       prompt: `
         Candidate Prompt: "${candidatePromptText}"
         User's Current Mood: "${userMood}"
         User's Preferred Tones: [${preferredTones.join(', ')}]
+        Recent Prompts Used (AVOID SEMANTIC REPETITION OF THESE): 
+        ${recentPrompts.map(p => `- ${p}`).join('\n')}
+
         Long-Term Memories:
         ${longTermMemories.map(m => `- [${m.type}] ${m.content}`).join('\n')}
         
         Return the result in strictly formatted JSON according to the schema.
       `,
-      abortSignal: AbortSignal.timeout(5000)
+      abortSignal: AbortSignal.timeout(8000)
     });
 
     const latency = Date.now() - startTime;
-    // We can run through our explicit validatePrompt just to be extra sure, though ai SDK does it.
     const valid = validatePrompt(object);
-    if (!valid) throw new Error("Validation failed");
+    if (!valid || valid.quality_score < 70) {
+      console.warn("Prompt generation rejected due to low quality score or validation failure.", valid?.quality_score);
+      throw new Error("Validation or quality score failed");
+    }
 
     logAIOperation('generatePersonalizedPrompt', latency, true, model);
     return valid;
@@ -143,19 +157,30 @@ export async function generateFollowUpPrompt(
         - Must sound natural and empathetic.
         - Do not diagnose or make assumptions about the user's life.
         - Ask an open-ended, gently probing question.
+        
+        CRITICAL: Contextual relevance. The follow-up MUST connect to the user's actual answer.
+        BAD EXAMPLE:
+        User: "Hôm nay deadline dí quá."
+        AI: "Điều gì khiến bạn hạnh phúc?" (ignores the context)
+        
+        GOOD EXAMPLE:
+        User: "Hôm nay deadline dí quá."
+        AI: "Trong cả đống deadline hôm nay, phần nào thực sự làm bạn mệt nhất?" (highly contextual)
+
+        Evaluate your prompt and assign a quality_score 0-100 based on context relevance and tone. Set structural_pattern to describe the type of question.
       `,
       prompt: `
         User's Mood: "${userMood}"
         User's Answer: "${previousAnswer}"
         
-        Generate the follow-up prompt in the structured JSON format.
+        Generate the highly contextual follow-up prompt in the structured JSON format.
       `,
-      abortSignal: AbortSignal.timeout(5000)
+      abortSignal: AbortSignal.timeout(8000)
     });
 
     const latency = Date.now() - startTime;
     const valid = validatePrompt(object);
-    if (!valid) throw new Error("Validation failed");
+    if (!valid || valid.quality_score < 70) throw new Error("Validation or quality score failed");
 
     logAIOperation('generateFollowUpPrompt', latency, true, model);
     return valid;

@@ -1,7 +1,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { EmptyState } from '@/components/ui/EmptyState';
+
 import { Button } from "@/components/ui/Button";
 import { getTranslations, getLocale } from "next-intl/server";
 import { auth } from '@/auth';
@@ -60,18 +60,20 @@ export default async function Home() {
   }
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-8 flex flex-col items-center pt-8">
-      <div className="space-y-2 text-center w-full max-w-2xl">
-        <h1 className="text-2xl font-medium tracking-tight">{th("morning")} {session.user?.name || session.user?.email?.split('@')[0]}</h1>
-        <p className="text-[var(--muted-foreground)]">{th("howAreYou")}</p>
+    <div className="animate-in fade-in slide-in-from-bottom-2 duration-1000 space-y-12 flex flex-col items-center pt-24 min-h-[80vh]">
+      <div className="space-y-4 text-center w-full max-w-2xl">
+        <h1 className="text-3xl font-serif tracking-tight text-[var(--foreground)] opacity-90">{th("morning")} {session.user?.name || session.user?.email?.split('@')[0]}</h1>
+        <p className="text-lg text-[var(--muted-foreground)] opacity-80">{th("howAreYou")}</p>
       </div>
 
-      <div className="w-full max-w-2xl">
-        <EmptyState
-          title={t('emptyStateTitle')}
-          description={t('emptyStateDesc')}
-          action={<Link href="./journal"><Button>{t('newEntry')}</Button></Link>}
-        />
+      <div className="w-full max-w-md pt-8 flex justify-center">
+        <Link href={`/${locale}/journal`} className="w-full">
+          <div className="w-full px-6 py-4 rounded-2xl bg-[var(--card)] border border-[var(--border)]/30 shadow-sm hover:shadow-md hover:bg-[var(--accent)]/5 transition-all duration-300 text-center cursor-pointer group">
+            <span className="text-lg text-[var(--muted-foreground)] group-hover:text-[var(--foreground)] transition-colors">
+              {t('newEntry')}
+            </span>
+          </div>
+        </Link>
       </div>
     </div>
   );

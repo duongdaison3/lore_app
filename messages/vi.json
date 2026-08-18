@@ -13,17 +13,17 @@
   "Journal": {
     "emptyStateTitle": "Chưa có gì ở đây cả",
     "emptyStateDesc": "Không cần viết hay. Viết như đang nhắn cho chính mình.",
-    "newEntry": "Bắt đầu viết",
-    "placeholder": "Bạn đang nghĩ gì hôm nay...?",
-    "vibeQuestion": "Hôm nay bạn đang ở vibe nào?",
-    "okayTellMe": "Okay, kể tôi nghe một chút.",
-    "digDeeper": "Đào sâu thêm một chút?",
+    "newEntry": "Viết cho hôm nay...",
+    "placeholder": "Không cần viết hay. Viết như đang nhắn cho chính mình.",
+    "vibeQuestion": "Hôm nay của bạn thế nào?",
+    "okayTellMe": "Kể mình nghe một chút nhé.",
+    "digDeeper": "Muốn đào sâu thêm một chút?",
     "defaultPrompt": "Có điều gì đáng nhớ hôm nay không?",
     "continue": "Tiếp tục",
     "saveToLore": "Lưu vào Lore",
     "writeNaturally": "Cứ viết tự nhiên...",
-    "thatsEnough": "Thôi, vậy đủ rồi",
-    "savedTitle": "Đã lưu vào Lore",
+    "thatsEnough": "Vậy là đủ cho hôm nay.",
+    "savedTitle": "Đã lưu vào Lore ✨",
     "backHome": "Quay lại trang chủ",
     "fallbackPrimary": "Nếu hôm nay là một tập phim, bạn sẽ đặt tên nó là gì?",
     "fallbackFollowUp": "Điều gì đã khiến bạn quyết định như vậy?"
@@ -73,6 +73,7 @@
   },
   "Navigation": {
     "library": "Thư viện",
+    "lore": "Kỷ niệm",
     "settings": "Cài đặt"
   },
   "Theme": {
@@ -86,5 +87,24 @@
     "welcomeDesc": "Ghi chép lại những suy nghĩ, cảm xúc và kỉ niệm. Nhận những câu hỏi gợi mở từ AI để hiểu rõ bản thân hơn.",
     "loginBtn": "Đăng nhập",
     "registerBtn": "Bắt đầu ngay"
+  },
+  "Lore": {
+    "title": "Kỷ niệm của bạn",
+    "subtitle": "Khám phá lại những mảnh ghép nhỏ bé tạo nên câu chuyện của chính mình.",
+    "onThisDay": "Ngày này năm xưa",
+    "monthlyLore": "Ghi chép tháng này",
+    "theFacts": "Thống kê",
+    "entriesWritten": "Số lần viết",
+    "activeDays": "Số ngày hoạt động",
+    "topMoods": "Cảm xúc thường gặp",
+    "aiReflection": "Suy ngẫm",
+    "highlights": "Những điểm nhấn",
+    "tinyWins": "Niềm vui nhỏ bé",
+    "plotTwists": "Bất ngờ phút chót",
+    "themes": "Chủ đề quen thuộc",
+    "people": "Những người luôn xuất hiện",
+    "milestones": "Cột mốc đáng nhớ",
+    "hideTitle": "Ẩn khỏi Kỷ niệm",
+    "hiddenSuccess": "Đã ẩn dòng kỷ niệm này."
   }
 }
