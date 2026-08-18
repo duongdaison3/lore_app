@@ -178,5 +178,17 @@
     "step2Desc": "Nhận những câu hỏi gợi mở từ AI để khám phá chiều sâu cảm xúc của bạn.",
     "step3Title": "Nhìn lại Kỷ niệm",
     "step3Desc": "Lore tự động đúc kết những mảnh ghép nhỏ bé thành câu chuyện của riêng bạn."
+  },
+  "Dashboard": {
+    "recentEntries": "Nhật ký gần đây",
+    "viewAll": "Xem tất cả",
+    "monthlyStats": "Tháng này",
+    "entries": "Bài viết",
+    "activeDays": "Ngày hoạt động",
+    "streak": "Chuỗi ngày",
+    "days": "Ngày",
+    "streakDesc": "Duy trì thói quen viết nhé!",
+    "onThisDay": "Ngày này năm xưa",
+    "noRecent": "Chưa có bài viết nào gần đây."
   }
 }

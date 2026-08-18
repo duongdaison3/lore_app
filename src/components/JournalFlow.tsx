@@ -16,7 +16,7 @@ interface Prompt {
   isFollowUp: boolean
 }
 
-export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Prompt | null, followUp: Prompt | null } }) {
+export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Prompt[], followUp: Prompt | null } }) {
   const t = useTranslations("Journal")
   const locale = useLocale()
   const [step, setStep] = useState<"mood" | "primary" | "followup" | "complete">("mood")
@@ -25,7 +25,17 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
   const router = useRouter()
   
   const [dynamicFollowUp, setDynamicFollowUp] = useState<Prompt | null>(null)
-  const [primaryAnswer, setPrimaryAnswer] = useState("")
+  
+  const [currentPromptIndex, setCurrentPromptIndex] = useState(0)
+  const [primaryAnswers, setPrimaryAnswers] = useState<Record<string, string>>({})
+  const currentPrimaryPrompt = initialPrompts.primary[currentPromptIndex]
+  const currentPrimaryAnswer = primaryAnswers[currentPrimaryPrompt?.id] || ""
+
+  const setPrimaryAnswer = (val: string) => {
+    if (!currentPrimaryPrompt) return
+    setPrimaryAnswers(prev => ({ ...prev, [currentPrimaryPrompt.id]: val }))
+  }
+
   const [followUpAnswer, setFollowUpAnswer] = useState("")
 
   const handleMoodSelect = async (selectedMood: string) => {
@@ -40,16 +50,27 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
   }
 
   const handlePrimarySave = async () => {
-    if (!entryId || !initialPrompts.primary) return
+    if (!entryId || !currentPrimaryPrompt || !currentPrimaryAnswer) return
     try {
-      await saveDraft(entryId, initialPrompts.primary.id, primaryAnswer)
+      await saveDraft(entryId, currentPrimaryPrompt.id, currentPrimaryAnswer)
       
-      const followUp = await generateContextualFollowUp(primaryAnswer, locale)
-      if (followUp) {
-        setDynamicFollowUp(followUp)
-        setStep("followup")
+      const isLastPrompt = currentPromptIndex === initialPrompts.primary.length - 1;
+      
+      if (!isLastPrompt) {
+        // Go to next prompt
+        setCurrentPromptIndex(prev => prev + 1);
       } else {
-        await handleComplete()
+        // All primary prompts answered, generate follow-up based on ALL answers
+        // Combine answers contextually for the AI
+        const combinedAnswers = initialPrompts.primary.map(p => `Q: ${p.text}\nA: ${primaryAnswers[p.id] || ""}`).join("\n\n");
+        
+        const followUp = await generateContextualFollowUp(combinedAnswers, locale)
+        if (followUp) {
+          setDynamicFollowUp(followUp)
+          setStep("followup")
+        } else {
+          await handleComplete()
+        }
       }
     } catch {
       toast.error(t("error"))
@@ -98,14 +119,14 @@ export function JournalFlow({ initialPrompts }: { initialPrompts: { primary: Pro
         <div className="space-y-4">
           <p className="text-sm font-medium uppercase tracking-widest text-[var(--primary)]">{t("okayTellMe")}</p>
           <h2 className="text-3xl sm:text-4xl font-heading font-semibold leading-snug text-[var(--foreground)]">
-            {initialPrompts.primary?.text || t("defaultPrompt")}
+            {currentPrimaryPrompt?.text || t("defaultPrompt")}
           </h2>
         </div>
         <div className="relative w-full h-[55vh] glass-panel rounded-3xl p-6 sm:p-8 shadow-inner overflow-hidden">
           <Textarea 
             className="absolute inset-0 h-full w-full text-lg sm:text-xl font-sans leading-relaxed border-none focus-visible:ring-0 p-6 sm:p-8 resize-none bg-transparent text-[var(--foreground)] pb-24 placeholder:text-[var(--muted-foreground)]/60"
             placeholder={t("placeholder")}
-            value={primaryAnswer}
+            value={currentPrimaryAnswer}
             onChange={(e) => setPrimaryAnswer(e.target.value)}
           />
         </div>

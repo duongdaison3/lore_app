@@ -25,11 +25,11 @@ export interface PromptEngineContext {
   userId?: string;
 }
 
-export async function getDailyPrompt(context: PromptEngineContext): Promise<Prompt | null> {
+export async function getDailyPrompt(context: PromptEngineContext): Promise<Prompt[]> {
   const { currentMood, userPreferences, recentPrompts, candidates, currentDate } = context;
 
   if (!candidates || candidates.length === 0) {
-    return null;
+    return [];
   }
 
   const DAY_IN_MS = 24 * 60 * 60 * 1000;
@@ -100,35 +100,48 @@ export async function getDailyPrompt(context: PromptEngineContext): Promise<Prom
   // 3. Sort by score descending
   scoredPrompts.sort((a, b) => b.score - a.score);
 
-  const bestCandidate = scoredPrompts[0].prompt;
+  // Determine how many prompts to return (2 to 4)
+  const numPrompts = Math.floor(Math.random() * 3) + 2;
+  const bestCandidates = scoredPrompts.slice(0, numPrompts).map(sp => sp.prompt);
 
   // 4. Augment with AI if possible (fallback to candidate if AI fails)
+  const finalPrompts: Prompt[] = [];
+
   try {
     const { generatePersonalizedPrompt } = await import('./aiPromptEngine');
     const recentTexts = context.recentPrompts.map(rp => rp.text).filter((t): t is string => !!t);
 
-    const aiResult = await generatePersonalizedPrompt(
-      bestCandidate.text,
-      currentMood,
-      userPreferences.preferredTones,
-      context.activeMemories || [],
-      context.locale || 'vi',
-      recentTexts,
-      context.userId
-    );
+    const aiPromises = bestCandidates.map(async (candidate) => {
+      try {
+        const aiResult = await generatePersonalizedPrompt(
+          candidate.text,
+          currentMood,
+          userPreferences.preferredTones,
+          context.activeMemories || [],
+          context.locale || 'vi',
+          recentTexts,
+          context.userId
+        );
 
-    if (aiResult) {
-      return {
-        ...bestCandidate,
-        text: aiResult.prompt,
-        category: aiResult.category,
-        tone: aiResult.tone,
-        intensity: aiResult.intensity
-      };
-    }
+        if (aiResult) {
+          return {
+            ...candidate,
+            text: aiResult.prompt,
+            category: aiResult.category,
+            tone: aiResult.tone,
+            intensity: aiResult.intensity
+          };
+        }
+      } catch (err) {
+        console.error("AI personalization failed for candidate", err);
+      }
+      return candidate;
+    });
+
+    const results = await Promise.all(aiPromises);
+    return results;
   } catch (err) {
     console.error("Failed to load or execute AI personalization", err);
+    return bestCandidates;
   }
-
-  return bestCandidate;
 }

@@ -85,7 +85,7 @@ export async function getPrompts() {
   // Initialize the engine
   const { getDailyPrompt } = await import('@/services/promptEngine')
   
-  const primary = await getDailyPrompt({
+  const primaryPrompts = await getDailyPrompt({
     currentMood,
     userPreferences: { preferredTones: user?.preferredTones || [] },
     recentPrompts,
@@ -94,10 +94,10 @@ export async function getPrompts() {
     activeMemories: user?.memories || [],
     locale: "vi",
     userId: session.user.id
-  }) || candidates[0];
+  });
 
   // We don't generate followUp upfront anymore. We return null.
-  return { primary, followUp: null }
+  return { primary: primaryPrompts || [candidates[0]], followUp: null }
 }
 
 export async function generateContextualFollowUp(answer: string, locale: string = "vi") {

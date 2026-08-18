@@ -178,5 +178,17 @@
     "step2Desc": "Receive gentle questions from AI to explore the depth of your emotions.",
     "step3Title": "Reflect on Memories",
     "step3Desc": "Lore automatically pieces together small fragments into your own story."
+  },
+  "Dashboard": {
+    "recentEntries": "Recent Entries",
+    "viewAll": "View all",
+    "monthlyStats": "This Month",
+    "entries": "Entries",
+    "activeDays": "Active Days",
+    "streak": "Current Streak",
+    "days": "Days",
+    "streakDesc": "Keep up the journaling habit!",
+    "onThisDay": "On This Day",
+    "noRecent": "No recent entries yet."
   }
 }

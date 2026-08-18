@@ -17,7 +17,7 @@ export default async function JournalPage() {
   } catch {
     // Fallback if DB not seeded or other error
     prompts = {
-      primary: { id: "p1", text: t("fallbackPrimary"), isFollowUp: false },
+      primary: [{ id: "p1", text: t("fallbackPrimary"), isFollowUp: false }],
       followUp: { id: "f1", text: t("fallbackFollowUp"), isFollowUp: true }
     }
   }

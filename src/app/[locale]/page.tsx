@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { getTranslations, getLocale } from "next-intl/server";
 import { DynamicGreeting } from "@/components/ui/DynamicGreeting";
 import { OnboardingCarousel } from "@/components/home/OnboardingCarousel";
+import { DashboardBentoGrid } from "@/components/home/DashboardBentoGrid";
+import { getDashboardData } from "@/app/actions/dashboard";
 import { auth } from '@/auth';
 
 export default async function Home() {
@@ -62,24 +64,19 @@ export default async function Home() {
     );
   }
 
+  const dashboardData = await getDashboardData();
+
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 space-y-12 flex flex-col items-center pt-20 min-h-[75vh]">
-      <div className="space-y-4 text-center w-full max-w-2xl">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 space-y-10 flex flex-col items-center pt-16 pb-32 min-h-[75vh] px-4">
+      
+      {/* Greeting Header */}
+      <div className="space-y-3 text-center w-full max-w-2xl mb-4">
         <DynamicGreeting name={session.user?.name || session.user?.email?.split('@')[0] || ""} />
-        <p className="text-lg md:text-xl text-[var(--muted-foreground)] font-light">{th("howAreYou")}</p>
+        <p className="text-lg text-[var(--muted-foreground)] font-light">{th("howAreYou")}</p>
       </div>
 
-      <div className="w-full max-w-md pt-6 flex justify-center">
-        <Link href={`/${locale}/journal`} className="w-full group">
-          <div className="w-full px-8 py-6 rounded-3xl glass-panel shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/0 via-[var(--primary)]/5 to-[var(--primary)]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-[-100%] group-hover:translate-x-[100%]"></div>
-            <span className="text-xl font-medium text-[var(--foreground)] transition-colors relative z-10 flex items-center justify-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" />
-              {t('newEntry')}
-            </span>
-          </div>
-        </Link>
-      </div>
+      <DashboardBentoGrid data={dashboardData} locale={locale} />
+      
     </div>
   );
 }
