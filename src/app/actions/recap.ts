@@ -77,7 +77,7 @@ export async function getRecapData() {
   }
 
   // Get some active memories to show
-  const memories = await prisma.longTermMemory.findMany({
+  const memories = await prisma.memory.findMany({
     where: { userId: session.user.id, status: 'active' },
     take: 3,
     orderBy: { createdAt: 'desc' }
