@@ -31,6 +31,8 @@
   "Library": {
     "backToLibrary": "Quay lại thư viện",
     "noAnswer": "Chưa có câu trả lời",
+    "generateQuoteTitle": "Tạo ảnh trích dẫn",
+    "downloadQuote": "Tải ảnh về máy",
     "deleteTitle": "Xóa entry này nhé?",
     "deleteDesc": "Những gì bạn viết trong entry này sẽ bị xóa và không thể hoàn tác.",
     "deletedSuccess": "Đã xóa entry",
@@ -190,5 +192,22 @@
     "streakDesc": "Duy trì thói quen viết nhé!",
     "onThisDay": "Ngày này năm xưa",
     "noRecent": "Chưa có bài viết nào gần đây."
+  },
+  "Recap": {
+    "notEnoughData": "Chưa đủ dữ liệu",
+    "notEnoughDataDesc": "Hãy viết thêm nhật ký để xem hành trình của bạn nhé!",
+    "welcome": "Nhìn Lại",
+    "welcomeSub": "Cuộn xuống để xem hành trình viết nhật ký của bạn.",
+    "statsTitle": "Những con số biết nói",
+    "totalDays": "Ngày viết",
+    "wordsWritten": "Từ đã viết",
+    "longestStreak": "Ngày liên tiếp",
+    "moodTitle": "Cảm xúc chủ đạo",
+    "moodDesc": "Đây là cảm xúc xuất hiện nhiều nhất trong hành trình của bạn.",
+    "memoriesTitle": "Kỷ niệm nổi bật",
+    "memoriesDesc": "Những khoảnh khắc mà AI đã ghi nhớ về bạn.",
+    "finishTitle": "Tiếp tục viết nhé!",
+    "finishDesc": "Hành trình hiểu bản thân vẫn còn dài. Hãy giữ thói quen này nhé.",
+    "backHome": "Về trang chủ"
   }
 }

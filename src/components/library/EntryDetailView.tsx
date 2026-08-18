@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation"
 import { useTranslations, useFormatter, useLocale } from "next-intl"
 import { Button } from "@/components/ui/Button"
 import { Textarea } from "@/components/ui/Textarea"
-import { ArrowLeft, Edit2, Trash2, Check, X } from "lucide-react"
 import { updateEntryAnswers } from "@/app/actions/library"
 import { toast } from "sonner"
 import { DeleteConfirmDialog } from "./DeleteConfirmDialog"
+import { QuoteGeneratorModal } from "./QuoteGeneratorModal"
 import { Card, CardContent } from "@/components/ui/Card"
+import { Share2, ArrowLeft, Edit2, Trash2, Check, X } from "lucide-react"
 
 // Assuming the types based on Prisma schema
 type AnswerType = {
@@ -38,6 +39,14 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  
+  // State for quote generator
+  const [quoteModalData, setQuoteModalData] = useState<{ isOpen: boolean; text: string; date: string; mood: string }>({
+    isOpen: false,
+    text: "",
+    date: "",
+    mood: ""
+  })
   
   // State for editable answers
   const [editedAnswers, setEditedAnswers] = useState<Record<string, string>>(
@@ -111,11 +120,28 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
 
       <div className="space-y-6 mt-8">
         {entry.answers.map((answer) => (
-          <Card key={answer.id} className="border-none shadow-sm bg-[var(--card)]/50 backdrop-blur">
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-medium text-[var(--foreground)]">
-                {answer.prompt.text}
-              </h3>
+          <Card key={answer.id} className="border-none shadow-sm bg-[var(--card)]/50 backdrop-blur group/card">
+            <CardContent className="p-6 space-y-4 relative">
+              <div className="flex justify-between items-start gap-4">
+                <h3 className="text-xl font-medium text-[var(--foreground)]">
+                  {answer.prompt.text}
+                </h3>
+                {!isEditing && (
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="opacity-0 group-hover/card:opacity-100 transition-opacity -mt-2 -mr-2 text-[var(--muted-foreground)] hover:text-[var(--primary)] shrink-0"
+                    onClick={() => setQuoteModalData({
+                      isOpen: true,
+                      text: answer.content,
+                      date: format.dateTime(new Date(entry.localDate), { dateStyle: 'short' }),
+                      mood: entry.mood
+                    })}
+                  >
+                    <Share2 className="h-5 w-5" />
+                  </Button>
+                )}
+              </div>
               
               {isEditing ? (
                 <Textarea 
@@ -137,6 +163,14 @@ export function EntryDetailView({ entry }: { entry: EntryType }) {
         entryId={entry.id} 
         isOpen={showDeleteModal} 
         onClose={() => setShowDeleteModal(false)} 
+      />
+
+      <QuoteGeneratorModal
+        isOpen={quoteModalData.isOpen}
+        onClose={() => setQuoteModalData(prev => ({ ...prev, isOpen: false }))}
+        quoteText={quoteModalData.text}
+        date={quoteModalData.date}
+        mood={quoteModalData.mood}
       />
     </div>
   )

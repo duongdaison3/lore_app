@@ -31,6 +31,8 @@
   "Library": {
     "backToLibrary": "Back to library",
     "noAnswer": "No answer yet",
+    "generateQuoteTitle": "Generate Quote",
+    "downloadQuote": "Download Image",
     "deleteTitle": "Delete this entry?",
     "deleteDesc": "Whatever you wrote in this entry will be deleted and cannot be undone.",
     "deletedSuccess": "Entry deleted",
@@ -190,5 +192,22 @@
     "streakDesc": "Keep up the journaling habit!",
     "onThisDay": "On This Day",
     "noRecent": "No recent entries yet."
+  },
+  "Recap": {
+    "notEnoughData": "Not enough data",
+    "notEnoughDataDesc": "Write some more journal entries to see your journey!",
+    "welcome": "Your Journey",
+    "welcomeSub": "Scroll down to see your journaling journey.",
+    "statsTitle": "The Numbers",
+    "totalDays": "Days Written",
+    "wordsWritten": "Words Written",
+    "longestStreak": "Longest Streak",
+    "moodTitle": "Dominant Mood",
+    "moodDesc": "This is the mood that appeared most frequently in your journey.",
+    "memoriesTitle": "Key Memories",
+    "memoriesDesc": "Moments that the AI remembered about you.",
+    "finishTitle": "Keep Writing!",
+    "finishDesc": "The journey of self-discovery is long. Keep up the habit.",
+    "backHome": "Back to Home"
   }
 }

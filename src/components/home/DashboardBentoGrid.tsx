@@ -37,6 +37,26 @@ export function DashboardBentoGrid({
         </Link>
       </div>
 
+      {/* Recap Banner */}
+      <div className="w-full">
+        <Link href={`/${locale}/recap`} className="block group">
+          <div className="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-[var(--primary-foreground)] shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="text-3xl">✨</span>
+              <div>
+                <h3 className="font-heading font-bold text-lg leading-tight">Lore Recap</h3>
+                <p className="text-sm opacity-90 font-medium">Nhìn lại hành trình viết nhật ký của bạn</p>
+              </div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </Link>
+      </div>
+
       {/* Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
